@@ -14,7 +14,12 @@
       "frameLips": true,
       "roomCandleShadows": true,
       "handCandle": true
-    }
+    },
+    "authorName": "Martin Porter",
+    "authorLinks": [
+      "https://martinposta.com/",
+      "https://foto.martinposta.com/"
+    ]
   },
   "nameplate": {
     "x": -48.4,
