@@ -57,7 +57,7 @@
     "wainscotH": 420
   },
   "room": {
-    "x0": -1299,
+    "x0": -1610.81,
     "x1": 1934.47,
     "y0": -989
   },
@@ -196,54 +196,6 @@
       "bytes": 489296,
       "v": 2,
       "addedAt": "2026-10-13T00:21:11.786Z"
-    },
-    "7a5f955c14ae": {
-      "kind": "cabinet",
-      "name": "cabinet-box.png",
-      "w": 2519,
-      "h": 966,
-      "alpha": true,
-      "widths": [
-        1280,
-        2519
-      ],
-      "look": null,
-      "color": "#442615",
-      "bytes": 169042,
-      "v": 5,
-      "addedAt": "2026-10-13T00:21:12.558Z"
-    },
-    "a1717c9898ed": {
-      "kind": "drawer",
-      "name": "cabinet-shelf-narrow.png",
-      "w": 799,
-      "h": 351,
-      "alpha": true,
-      "widths": [
-        640,
-        799
-      ],
-      "look": null,
-      "color": "#854219",
-      "bytes": 47076,
-      "v": 3,
-      "addedAt": "2026-10-13T00:21:13.033Z"
-    },
-    "554be9539d4e": {
-      "kind": "drawer",
-      "name": "cabinet-shelf-wide.png",
-      "w": 1143,
-      "h": 354,
-      "alpha": true,
-      "widths": [
-        640,
-        1143
-      ],
-      "look": null,
-      "color": "#92481f",
-      "bytes": 80838,
-      "v": 3,
-      "addedAt": "2026-10-13T00:21:13.282Z"
     },
     "c7d45bf977b9": {
       "kind": "tile",
@@ -414,18 +366,19 @@
     },
     "6626420bc9e3": {
       "kind": "item",
-      "name": "certificat-of-forgery.jpg",
-      "w": 1280,
-      "h": 935,
-      "alpha": false,
+      "name": "certifikat.png",
+      "w": 1600,
+      "h": 1172,
+      "alpha": true,
       "widths": [
         640,
-        1280
+        1280,
+        1600
       ],
       "look": null,
-      "color": "#79746a",
-      "bytes": 234535,
-      "v": 2,
+      "color": "#8d847a",
+      "bytes": 605455,
+      "v": 3,
       "addedAt": "2026-10-13T17:38:21.848Z"
     },
     "3fbc4e3486d0": {
@@ -653,21 +606,6 @@
       "v": 1,
       "addedAt": "2026-10-13T22:21:28.071Z"
     },
-    "bc570418fdf8": {
-      "kind": "item",
-      "name": "candle.png",
-      "w": 356,
-      "h": 273,
-      "alpha": true,
-      "widths": [
-        356
-      ],
-      "look": "candlelit",
-      "color": "#543724",
-      "bytes": 16493,
-      "v": 7,
-      "addedAt": "2026-10-13T22:30:26.676Z"
-    },
     "627e3ccd55ee": {
       "kind": "plate",
       "name": "Weathered Brass Nameplate with Rivets Background Removed.png",
@@ -877,7 +815,7 @@
         },
         {
           "x": 0.32,
-          "y": 0.33,
+          "y": 0.3355,
           "w": 0.16,
           "h": 0.17
         },
@@ -889,7 +827,7 @@
         },
         {
           "x": 0.7,
-          "y": 0.33,
+          "y": 0.3344,
           "w": 0.14,
           "h": 0.17
         },
@@ -916,6 +854,42 @@
           "y": 0.12,
           "w": 0.15,
           "h": 0.18
+        },
+        {
+          "x": 0.5135,
+          "y": 0.5467,
+          "w": 0.1581,
+          "h": 0.1703
+        },
+        {
+          "x": 0.6897,
+          "y": 0.5478,
+          "w": 0.1633,
+          "h": 0.1692
+        },
+        {
+          "x": 0.1445,
+          "y": 0.7605,
+          "w": 0.1406,
+          "h": 0.1399
+        },
+        {
+          "x": 0.3252,
+          "y": 0.764,
+          "w": 0.1659,
+          "h": 0.1319
+        },
+        {
+          "x": 0.5151,
+          "y": 0.7501,
+          "w": 0.1664,
+          "h": 0.1455
+        },
+        {
+          "x": 0.7046,
+          "y": 0.7533,
+          "w": 0.1468,
+          "h": 0.1375
         }
       ]
     },
@@ -923,15 +897,15 @@
       "kind": "surround",
       "name": "bok-hlavice.png",
       "w": 600,
-      "h": 360,
+      "h": 332,
       "alpha": false,
       "widths": [
         600
       ],
       "look": null,
-      "color": "#583219",
-      "bytes": 40364,
-      "v": 2,
+      "color": "#5a3319",
+      "bytes": 37336,
+      "v": 3,
       "addedAt": "2026-10-25T12:19:37.470Z"
     },
     "f90c08ca9df4": {
@@ -945,8 +919,8 @@
       ],
       "look": null,
       "color": "#4b2b13",
-      "bytes": 77314,
-      "v": 2,
+      "bytes": 79944,
+      "v": 3,
       "addedAt": "2026-10-25T12:19:37.625Z"
     },
     "1b7ab0608b71": {
@@ -968,15 +942,15 @@
       "kind": "surround",
       "name": "lambrie.png",
       "w": 800,
-      "h": 467,
+      "h": 456,
       "alpha": false,
       "widths": [
         800
       ],
       "look": null,
       "color": "#432714",
-      "bytes": 37122,
-      "v": 2,
+      "bytes": 36274,
+      "v": 3,
       "addedAt": "2026-10-25T12:19:38.118Z"
     },
     "9aaeffdcab18": {
@@ -1180,7 +1154,7 @@
     {
       "id": "candle-2",
       "media": "5e857f37a13c",
-      "x": -592.25,
+      "x": -621.06,
       "y": 793.3,
       "w": 96,
       "rotation": 0
@@ -1290,10 +1264,10 @@
     {
       "id": "mapa-sveta",
       "media": "2590e11524f1",
-      "x": 1210.31,
-      "y": 76.36,
+      "x": 1490.75,
+      "y": 86.19,
       "w": 400,
-      "rotation": -0.4,
+      "rotation": 1.4,
       "plaqueAt": {
         "dx": 16.7,
         "dy": -351
@@ -1319,8 +1293,8 @@
     {
       "id": "mapa-amerika",
       "media": "767c78e2f549",
-      "x": -893.13,
-      "y": 1336.22,
+      "x": -1198.91,
+      "y": 1385.53,
       "w": 323.5,
       "rotation": -0.2,
       "plaqueAt": {
@@ -1359,9 +1333,9 @@
       "exhibit": {
         "slug": "certificat-of-forgery",
         "inv": 1,
-        "title": "Certificat of forgery",
+        "title": "Proof on Paper",
         "medium": "",
-        "description": "Miskatonic University is a fictional university located in Arkham, near the banks of the (fictional) Miskatonic River. Lovecraft concocted the word Miskatonic as a mixture of root words from the Algonquian languages,[10][11] the source of many place-names throughout New England. Anthony Pearsall believes the name is based on the Housatonic River,[12] which flows from the Berkshires of Western Massachusetts and western Connecticut to Long Island Sound. Lovecraft first mentioned the Miskatonic River in his 1920 story \"The Picture in the House\".",
+        "description": "This distinguished university diploma belongs to an alumnus of Miskatonic University who also happens to be the proud owner of the entire private collection on display. Considering the sheer weirdness of everything else in the room, his academic background suddenly makes a lot of sense.\nBeing an alumnus of such a peculiar institution comes with a very specific kind of expertise that is best kept off your standard resume. Still, the owner displays this document with unmistakable pride, treating it like the highest possible honor for fooling history, collectors, and plain common sense all at once. Just take a closer look at what he actually majored in.",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1468,8 +1442,8 @@
     {
       "id": "mura2",
       "media": "3018059b4b15",
-      "x": 694.29,
-      "y": 374.52,
+      "x": -944.35,
+      "y": 86.37,
       "w": 73.76,
       "rotation": 0,
       "opening": {
@@ -1528,7 +1502,7 @@
     {
       "id": "antique-leather-books-on-black-backgroun",
       "media": "67ce4e1fdb6d",
-      "x": -611.75,
+      "x": -650.49,
       "y": 1000.03,
       "w": 280.77,
       "rotation": 0,
@@ -1562,24 +1536,25 @@
     {
       "id": "monstrum1-2",
       "media": "5bf40b8694f0",
-      "x": 1554.19,
-      "y": 69.01,
+      "x": -895.8,
+      "y": 1410.11,
       "w": 261.17,
-      "rotation": 0
+      "rotation": -7.5
     },
     {
       "id": "svicen-polozeny",
       "media": "5e857f37a13c",
-      "x": 967.51,
-      "y": 134.18,
+      "x": 990.87,
+      "y": 133.26,
       "w": 87.46,
-      "rotation": 0
+      "rotation": 0,
+      "z": -4
     },
     {
       "id": "brouk-2",
       "media": "baf35750b6d5",
-      "x": 1070.22,
-      "y": 529.68,
+      "x": 1587.75,
+      "y": 529.55,
       "w": 120,
       "rotation": 0,
       "sits": "mahogany-cubby-bookcase-against-black-ba-2"
@@ -1614,8 +1589,8 @@
     {
       "id": "kytka4-2",
       "media": "03ecdab33521",
-      "x": 1068.6,
-      "y": 1130.69,
+      "x": 1069.39,
+      "y": 1130.67,
       "w": 120,
       "rotation": 0,
       "sits": "mahogany-cubby-bookcase-against-black-ba-2"
@@ -1648,13 +1623,13 @@
     {
       "id": "dscf2869",
       "media": "f1661f4f6c80",
-      "x": -280.6,
+      "x": -351.65,
       "y": 902.17,
       "w": 238.56,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 12.4,
-        "dy": 3
+        "dx": 15.5,
+        "dy": 8.1
       },
       "on": "cabinet",
       "exhibit": {
@@ -1671,13 +1646,13 @@
     {
       "id": "dscf2765",
       "media": "9814ae499102",
-      "x": 334.6,
+      "x": 222.15,
       "y": 969.82,
       "w": 140.35,
       "rotation": 0,
       "plaqueAt": {
-        "dx": -1.6,
-        "dy": 7.6
+        "dx": 4.4,
+        "dy": 15.7
       },
       "on": "cabinet",
       "exhibit": {
@@ -1694,13 +1669,13 @@
     {
       "id": "dscf2803",
       "media": "213c3e89760f",
-      "x": 39.97,
+      "x": -42.25,
       "y": 859.05,
       "w": 369.99,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 192.9,
-        "dy": 65.4
+        "dx": -8.2,
+        "dy": 13.9
       },
       "on": "cabinet",
       "exhibit": {
