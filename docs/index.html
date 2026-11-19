@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabinet of Curiosities</title>
+<base href="./">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cabinet of Curiosities">
+<meta property="og:description" content="Personal projects, shown as a night visit to a cabinet of curiosities.">
+<meta name="description" content="Personal projects, shown as a night visit to a cabinet of curiosities.">
+<meta property="og:url" content="https://cabinet.martinposta.com/">
+<link rel="canonical" href="https://cabinet.martinposta.com/">
+<meta property="og:image" content="https://cabinet.martinposta.com/media/73039ad6bde6/og.jpg?v=1">
+<meta property="og:image:width" content="644">
+<meta property="og:image:height" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- network only, nothing is decoded here: the wall must not make the doors page feel frozen (D14) -->
+<link rel="prefetch" href="cabinet/">
+<link rel="prefetch" href="data.json">
+<style>
+/* The entrance (PLAN D14): closed cabinet doors found by candlelight. One page, no animation. */
+@font-face{font-family:"IM Fell English SC";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/im-fell-english-sc-latin-400-normal.woff2) format("woff2")}
+:root{--ink:#ecdfc0;--dim:#b7ab8c;--gilt:#c9a24a;--gilt-hi:#f3d98b;color-scheme:dark}
+html,body{height:100%;margin:0;background:#050806;color:var(--ink);overflow:hidden}
+body{display:grid;place-items:center;font-family:"IM Fell English SC","Iowan Old Style",Georgia,serif}
+.scene{position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;padding:16px}
+.doors{display:block;padding:0;border:0;background:none;cursor:pointer;line-height:0;border-radius:4px}
+.doors:focus-visible{outline:2px solid var(--gilt-hi);outline-offset:8px}
+.doors img,.doors svg{display:block;max-width:min(92vw,1100px);max-height:calc(100vh - 32px);width:auto;height:auto}
+.doors svg{width:min(92vw,calc((100vh - 32px) * .78));height:auto}
+.dark{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+/* the casing around the doors (admin → Místnost → Úvodní dveře): one picture with a see-through opening;
+   the doors fill the opening drawn on it and the casing is laid over their edges */
+.portal{position:relative;width:min(92vw,1400px,calc((100vh - 32px) * var(--ar)));aspect-ratio:var(--ar)}
+.portal .doors{position:absolute;left:var(--ox);top:var(--oy);width:var(--ow);height:var(--oh);border-radius:0}
+.portal .doors img,.portal .doors svg{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+.portal .casing{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
+@media (hover:none){.dark{display:none}}
+/* the hand candle, as on the wall (js/cursor.js) */
+html body.candle-cursor,html body.candle-cursor *{cursor:none!important}
+.hand-candle{position:fixed;left:0;top:0;z-index:25;pointer-events:none;will-change:transform}
+.hand-candle[hidden]{display:none}
+</style>
+</head>
+<body>
+<main class="scene">
+  <div class="portal" style="--ar:1500/2183;--ox:20.000%;--oy:23.130%;--ow:60.000%;--oh:76.870%"><button class="doors" id="doors" type="button" aria-label="Enter the cabinet"><img src="media/73039ad6bde6/751.webp?v=1" srcset="media/73039ad6bde6/751.webp?v=1 751w" sizes="(max-width:1200px) 92vw, 1100px" width="751" height="1400" alt="Closed cabinet doors"></button><img class="casing" src="media/9aaeffdcab18/1500.webp?v=2" srcset="media/9aaeffdcab18/1500.webp?v=2 1500w" sizes="(max-width:1400px) 92vw, 1400px" width="1500" height="2183" alt=""></div>
+</main>
+<canvas class="dark" aria-hidden="true"></canvas>
+<script>window.DOORS={"ajar":"media/4c2a60b1f079/751.webp?v=1","sound":null,"candle":{"src":"media/dc6269d0e651/162.webp?v=2","h":118,"w":43,"fx":0.5,"fy":0.15,"cursor":{"w":43,"h":118,"x1":"media/dc6269d0e651/cursor-118-v2-1x.png","x2":"media/dc6269d0e651/cursor-118-v2-2x.png"}},"dark":true};</script>
+<script type="module" src="js/doors.js?v=40bc46db73"></script>
+
+</body>
+</html>

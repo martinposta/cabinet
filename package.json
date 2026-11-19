@@ -1,0 +1,19 @@
+{
+  "name": "kabinet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cabinet of Curiosities: static portfolio for GitHub Pages with a local admin",
+  "type": "module",
+  "scripts": {
+    "admin": "node --watch admin/server.mjs",
+    "rebuild": "node lib/cli-rebuild.mjs",
+    "test": "node --test tests/kabinet.test.mjs",
+    "check-release": "node lib/cli-check-release.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "kabinet-admin", "runtimeExecutable": "npm", "runtimeArgs": ["run", "admin"], "port": 4322, "env": { "NO_OPEN": "1" } }
+  ]
+}

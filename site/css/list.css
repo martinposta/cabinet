@@ -1,0 +1,26 @@
+/* The plain list of exhibits (PLAN phase 4): for search engines, screen readers and anyone who does not
+   want to drag a wall around. Same fonts and paper as the catalogue card in the viewer. */
+@font-face{font-family:"IM Fell English";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/im-fell-english-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IM Fell English SC";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/im-fell-english-sc-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Spectral";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/spectral-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Spectral";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/spectral-latin-400-italic.woff2) format("woff2")}
+:root{--wall:#163126;--paper:#e9dcbb;--ink:#2a2117;--dim:#5b4a33;--red:#8a2a1e;--gilt:#c9a24a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--wall);color:#ecdfc0;font:17px/1.55 "Spectral",Georgia,serif;padding:48px 16px 64px}
+header,main,footer{max-width:860px;margin:0 auto}
+.eyebrow{font-family:"IM Fell English SC",Georgia,serif;letter-spacing:.2em;color:var(--gilt);margin:0}
+h1{font:400 clamp(34px,6vw,52px)/1.05 "IM Fell English",Georgia,serif;margin:6px 0 10px}
+.lead{color:#b7ab8c;margin:0 0 32px}
+a{color:#f3d98b}
+.ex{display:grid;grid-template-columns:180px 1fr;gap:20px;background:var(--paper);color:var(--ink);padding:20px;margin:0 0 18px;box-shadow:0 14px 30px rgba(0,0,0,.45)}
+.ex img{width:180px;height:135px;object-fit:cover;background:#0c1510;display:block}
+.ex.noimg{grid-template-columns:1fr}
+.ex .inv{font-family:"IM Fell English SC",Georgia,serif;letter-spacing:.14em;color:var(--red);font-size:14px}
+.ex h2{font:400 28px/1.1 "IM Fell English",Georgia,serif;margin:2px 0 4px}
+.ex h2 a{color:var(--ink);text-decoration:none}
+.ex h2 a:hover{text-decoration:underline}
+.ex .medium{font-style:italic;color:var(--dim);margin:0 0 8px}
+.ex p{margin:0 0 10px}
+.ex ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:4px 14px;font-family:"IM Fell English SC",Georgia,serif;letter-spacing:.08em;font-size:14px;color:var(--dim)}
+footer{margin-top:32px;font-size:15px}
+@media (max-width:560px){.ex{grid-template-columns:1fr}.ex img{width:100%;height:auto;aspect-ratio:4/3}}

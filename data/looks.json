@@ -1,0 +1,49 @@
+[
+  {
+    "id": "night-oil",
+    "name": "Noční olej",
+    "knobs": {
+      "exposure": -0.25,
+      "contrast": 1.08,
+      "saturation": 0.82,
+      "warmth": 0.25,
+      "gamma": 1.08,
+      "vignette": 0.35,
+      "grain": 0.15
+    }
+  },
+  {
+    "id": "candlelit",
+    "name": "Při svíčce",
+    "knobs": {
+      "exposure": -0.15,
+      "contrast": 1.05,
+      "saturation": 0.9,
+      "warmth": 0.55,
+      "vignette": 0.5,
+      "grain": 0.1
+    }
+  },
+  {
+    "id": "faded-print",
+    "name": "Vybledlý tisk",
+    "knobs": {
+      "contrast": 0.85,
+      "lift": 0.08,
+      "saturation": 0.6,
+      "warmth": 0.15,
+      "grain": 0.2
+    }
+  },
+  {
+    "id": "cold-night",
+    "name": "Studená noc",
+    "knobs": {
+      "exposure": -0.3,
+      "contrast": 1.1,
+      "saturation": 0.7,
+      "warmth": -0.35,
+      "vignette": 0.4
+    }
+  }
+]

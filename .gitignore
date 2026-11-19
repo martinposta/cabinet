@@ -1,0 +1,14 @@
+node_modules/
+data/*.tmp
+.DS_Store
+Thumbs.db
+*.log
+
+# Martin's originals (D6): local only, needed to re-apply a look. Never public (full metadata, GPS).
+assets-inbox/
+
+# image renders in progress (lib/images.mjs)
+.media-tmp/
+
+# Martin's imported originals (iPhone photos with metadata): local only, never public.
+Inport_foto/
