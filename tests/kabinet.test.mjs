@@ -486,6 +486,22 @@ test('door casing: shown only with a picture and its opening drawn', async () =>
   await call('PATCH', '/api/doors', { frameOpening: null });
 });
 
+test('author and other sites: rel=me and schema.org on every page, bad addresses refused', async () => {
+  assert.equal((await call('PATCH', '/api/settings', { authorLinks: 'martinposta.com' })).status, 400, 'not a full address');
+  const ok = await call('PATCH', '/api/settings', { authorName: 'Test Author', authorLinks: 'https://example.com/\nhttps://foto.example.com/' });
+  assert.equal(ok.status, 200, JSON.stringify(ok.json));
+  assert.deepEqual(ok.json.settings.authorLinks, ['https://example.com/', 'https://foto.example.com/']);
+  await settle();
+  const html = await (await fetch(BASE + '/preview/cabinet/')).text();
+  assert.match(html, /<link rel="me" href="https:\/\/foto\.example\.com\/">/);
+  const ld = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1]);
+  const person = ld['@graph'].find(n => n['@type'] === 'Person');
+  assert.equal(person.name, 'Test Author');
+  assert.deepEqual(person.sameAs, ['https://example.com/', 'https://foto.example.com/']);
+  assert.doesNotMatch(await (await fetch(BASE + '/preview/sitemap.xml')).text(), /example\.com/, 'the sitemap lists only this site');
+  await call('PATCH', '/api/settings', { authorName: '', authorLinks: '' });
+});
+
 test('effect switches and the hand candle', async () => {
   assert.equal((await call('PATCH', '/api/settings', { fx: { castShadows: false } })).status, 200);
   const { data } = await (await fetch(BASE + '/api/state')).json();

@@ -69,6 +69,9 @@ function render() {
     <div class="form">${field('siteUrl', 'Adresa webu (s lomítkem na konci)', S.siteUrl, 'placeholder="https://cabinet.martinposta.com/"')}
       ${field('customDomain', 'Vlastní doména (CNAME)', S.customDomain, 'placeholder="cabinet.martinposta.com"')}
       <label class="fld"><span>Popis webu (anglicky)</span><textarea class="field" rows="3" data-s="description" maxlength="300">${esc(S.description)}</textarea></label>
+      ${field('authorName', 'Autor', S.authorName, 'maxlength="80" placeholder="Martin Porter"')}
+      <label class="fld"><span>Moje další stránky (jedna na řádek)</span><textarea class="field" rows="3" data-s="authorLinks" placeholder="https://martinposta.com/">${esc((S.authorLinks || []).join('\n'))}</textarea></label>
+      <p class="hint">Autor a další stránky se zapíšou do každé stránky pro vyhledávače (schema.org, rel="me") – návštěvník je neuvidí. Do sitemapy patří jen adresy tohoto webu.</p>
       <label class="check"><input type="checkbox" data-ni${S.noindex ? ' checked' : ''}> <span><b style="font-weight:500">Skrýt před vyhledávači (noindex)</b><br><span class="hint">Měkké spuštění: web je veřejný, ale Google a spol. ho nezařadí a nevznikne sitemap. Před ostrým spuštěním vypni.</span></span></label></div>`);
   if (part === 'efekty') {
     const fx = S.fx || {}, hc = D().handCandle || {};
