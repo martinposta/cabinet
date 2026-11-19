@@ -14,8 +14,7 @@
       "frameLips": true,
       "roomCandleShadows": true,
       "handCandle": true
-    },
-    "noindex": true
+    }
   },
   "nameplate": {
     "x": -48.4,
