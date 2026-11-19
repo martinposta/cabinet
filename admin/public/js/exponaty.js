@@ -26,7 +26,7 @@ const FILTERS = {
 function renderList() {
   const all = exhibits(), list = all.filter(FILTERS[filter][1]);
   const chips = Object.entries(FILTERS).map(([k, [label, f]]) => {
-    const n = all.filter(f).length, amber = (k === 'nophoto' || k === 'nodesc') && n;
+    const n = all.filter(f).length, amber = k === 'nodesc' && n;
     return `<button class="chip${amber ? ' amber' : ''}" data-f="${k}" aria-pressed="${filter === k}">${label} ${n}</button>`;
   }).join('');
   const rows = list.map(d => {

@@ -141,11 +141,12 @@ export function uniqueSlug(base) {
   return s;
 }
 export const nextInv = () => Math.max(0, ...store.D.items.map(i => i.exhibit?.inv || 0)) + 1;
-/** What an exhibit still lacks (Czech), for the summary card and the list. */
+/** What an exhibit still lacks (Czech), for the summary card and the list. Gallery photos and the medium
+ *  are optional (Martin: not every exhibit gets them), so only a title and a description count. */
 export function missing(ex) {
   const out = [];
-  if (!ex.title || !ex.medium || !ex.description) out.push(!ex.description ? 'Chybí popis' : 'Chybí název nebo technika');
-  if (!(ex.gallery || []).some(g => store.D.media[g])) out.push('Chybí fotky do galerie');
+  if (!ex.description) out.push('Chybí popis');
+  else if (!ex.title) out.push('Chybí název');
   return out;
 }
 /** Where a media item is used, as [label, hash] pairs. */
