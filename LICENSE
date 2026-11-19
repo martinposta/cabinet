@@ -1,0 +1,19 @@
+Copyright © 2026 Martin Porter. All rights reserved.
+
+This is a personal, non-commercial project. No license is granted to copy, modify, distribute,
+or use any part of this repository (code, photographs, texts, images), except what the law allows
+and what the third-party licenses below grant for their own components. For any usage request,
+open an issue at https://github.com/martinposta/cabinet/issues.
+
+FAN WORKS
+Parts of the content are unofficial fan art and fan fiction inspired by existing works (films,
+books, games and their characters, props and settings). They are made for fun, are not affiliated
+with, endorsed by or sponsored by the rights holders, and earn no money: no ads, no sales, no
+commercial work of any kind. All characters, names, trademarks and original works belong to
+their respective owners; nothing here claims them. If you are a rights holder and want something
+changed or removed, open an issue and it will be dealt with promptly.
+
+THIRD-PARTY COMPONENTS
+Fonts (IM Fell English, Spectral, IBM Plex) are under the SIL Open Font License 1.1; the full
+texts are in site/fonts/ and admin/public/fonts/. See CREDITS.md. The local admin uses sharp
+(Apache-2.0) and its bundled libraries, installed by npm and not part of this repository.

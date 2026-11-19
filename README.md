@@ -1,3 +1,15 @@
+# Cabinet of Curiosities
+
+A personal portfolio shown as a night visit to a cabinet of curiosities: a static site (GitHub Pages,
+`docs/`), edited in a local admin. Live at https://cabinet.martinposta.com/.
+
+**Personal projects and fan art only. Nothing here is commercial work, and nothing is for sale.**
+Fan works are unofficial and unaffiliated; characters, names and original works belong to their
+owners (details in [`LICENSE`](LICENSE)). All rights reserved otherwise. Font licenses are in
+[`CREDITS.md`](CREDITS.md).
+
+---
+
 # Kabinet kuriozit
 
 Tvoje portfolio jako noční návštěva kabinetu kuriozit. Web je statický (GitHub Pages),
