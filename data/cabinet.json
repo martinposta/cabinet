@@ -1272,7 +1272,7 @@
         "dy": -351
       },
       "exhibit": {
-        "slug": "mapa-sveta",
+        "slug": "worldmap",
         "inv": 18,
         "title": "World Map",
         "medium": "hand-painted on parchment",
@@ -1301,7 +1301,7 @@
         "dy": -354.9
       },
       "exhibit": {
-        "slug": "mapa-amerika",
+        "slug": "lostmapofamerica",
         "inv": 17,
         "title": "Lost map of America",
         "medium": "hand-drawn on parchment",
@@ -1330,7 +1330,7 @@
         "dy": 1.4
       },
       "exhibit": {
-        "slug": "certificat-of-forgery",
+        "slug": "certificate",
         "inv": 1,
         "title": "Proof on Paper",
         "medium": "",
@@ -1606,7 +1606,7 @@
         "dy": 8.8
       },
       "exhibit": {
-        "slug": "dscf2756",
+        "slug": "skulloflarsmoller",
         "inv": 4,
         "title": "Skull of Lars Møller",
         "medium": "",
@@ -1632,7 +1632,7 @@
       },
       "on": "cabinet",
       "exhibit": {
-        "slug": "dscf2869",
+        "slug": "mockupofdavid",
         "inv": 6,
         "title": "Mockup of David",
         "medium": "",
@@ -1655,7 +1655,7 @@
       },
       "on": "cabinet",
       "exhibit": {
-        "slug": "dscf2765",
+        "slug": "mysteriousidol",
         "inv": 2,
         "title": "Mysterious Idol",
         "medium": "",
@@ -1678,7 +1678,7 @@
       },
       "on": "cabinet",
       "exhibit": {
-        "slug": "dscf2803",
+        "slug": "kinginyellow",
         "inv": 11,
         "title": "The King in Yellow",
         "medium": "",
@@ -1700,7 +1700,7 @@
         "dy": -14.2
       },
       "exhibit": {
-        "slug": "dscf2810",
+        "slug": "somanofurudairi",
         "inv": 9,
         "title": "Sóma no furudairi",
         "medium": "",
@@ -1722,7 +1722,7 @@
         "dy": -5.3
       },
       "exhibit": {
-        "slug": "dscf2813",
+        "slug": "dl44",
         "inv": 7,
         "title": "DL-44 Hero prop",
         "medium": "",
@@ -1751,7 +1751,7 @@
         "dy": -8.9
       },
       "exhibit": {
-        "slug": "dscf2838",
+        "slug": "lostarchfound",
         "inv": 5,
         "title": "The Lost Arch found",
         "medium": "",
@@ -1780,7 +1780,7 @@
         "dy": -8.4
       },
       "exhibit": {
-        "slug": "dscf2840",
+        "slug": "onegiantleap",
         "inv": 10,
         "title": "One Giant Leap for Mankind",
         "medium": "",
@@ -1809,7 +1809,7 @@
         "dy": -0.9
       },
       "exhibit": {
-        "slug": "dscf2844",
+        "slug": "twofaces",
         "inv": 3,
         "title": "Two Faces of Terror",
         "medium": "",
@@ -1838,7 +1838,7 @@
         "dy": 1.3
       },
       "exhibit": {
-        "slug": "dscf2848",
+        "slug": "dl44m",
         "inv": 8,
         "title": "DL-44M",
         "medium": "",
