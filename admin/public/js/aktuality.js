@@ -4,7 +4,8 @@
 // Texts save themselves while typing (no undo, like the exhibit texts); a new entry, a deletion and a
 // changed date reload the list (it is re-sorted by date).
 
-import { $, $$, esc, store, on, api, status, refresh, commit, stopPointer } from './core.js';
+import { $, $$, esc, store, on, api, status, refresh, commit, stopPointer, pickMedia, mediaSrc } from './core.js';
+import { rectDialog } from './shelves.js';
 
 const root = () => $('#sec-aktuality');
 const D = () => store.D;
@@ -27,12 +28,22 @@ function boardCard() {
     <div class="row"><a class="btn" href="/#stena/${encodeURIComponent(b.id)}">Ukázat na stěně</a><button class="btn" data-act="off">Sundat ze stěny</button></div></div>`;
 }
 
+// the opened board's own picture (Knihovna, kind „Tabule – detail“) and the text area drawn on it
+function lookCard() {
+  const nb = D().noticesBoard, m = nb?.media && D().media[nb.media];
+  return `<div class="card nb-state"><span class="thumb checker ck" style="width:72px;height:56px;border-radius:6px;flex:none">${m ? `<img src="${mediaSrc(nb.media)}" alt="">` : ''}</span>
+    <div><b>Tabule zblízka</b><span class="hint">${m ? `${esc(m.name)} · ${nb.area ? `plocha pro text ${Math.round(nb.area.w * 100)} × ${Math.round(nb.area.h * 100)} %` : '<span class="warn">nakresli plochu pro text</span>'}`
+      : 'Obrázek otevřené tabule (rám i břidlice). Bez něj se kreslí z CSS. Nahraješ ho v Knihovně jako „Tabule – detail“.'}</span></div>
+    <div class="row"><button class="btn" data-act="look-pick">${m ? 'Změnit…' : 'Vybrat…'}</button>${m ? '<button class="btn" data-act="look-area">Plocha pro text…</button><button class="btn" data-act="look-clear">Zrušit</button>' : ''}</div></div>`;
+}
+
 function render() {
   const list = sorted();
   root().innerHTML = `<main class="nt-main" aria-label="Aktuality"><div class="nt-col">
     <div class="row" style="justify-content:space-between"><h1>Aktuality</h1><button class="btn primary" data-act="new">+ Nový zápis</button></div>
     <p class="lead">Co je nového – na webu se to ukáže křídou na tabuli, od nejnovějšího. Píše se anglicky, nový řádek = nový odstavec.</p>
     ${boardCard()}
+    ${lookCard()}
     ${list.map(n => `<div class="card nt-entry" data-id="${n.id}">
       <div class="row" style="justify-content:space-between"><input type="date" class="field nt-date" value="${esc(n.date)}" aria-label="Datum zápisu">
         ${confirmDel === n.id ? `<span class="row"><span class="warn">Opravdu smazat?</span><button class="btn sm danger" data-act="del-yes">Smazat</button><button class="btn sm" data-act="del-no">Ne</button></span>`
@@ -61,6 +72,17 @@ async function onClick(e) {
       // render ourselves: the 'data' listener skips while focus is in this section – and the clicked
       // button is in it, so a new entry never appeared until a reload (Martin, 2026-11-20)
       focusId = r.notice.id; await refresh(); render(); status('ok', 'Nový zápis');
+    }
+    if (act === 'look-pick') {
+      const id2 = await pickMedia({ title: 'Tabule zblízka', kinds: ['board'], current: D().noticesBoard?.media });
+      if (id2) { await api('PATCH', '/api/notices-board', { media: id2 }); await refresh(); render(); status('ok', 'Obrázek tabule nastaven – nakresli plochu pro text'); }
+    }
+    if (act === 'look-clear') { await api('PATCH', '/api/notices-board', { media: null }); await refresh(); render(); status('ok', 'Tabule zblízka zase z CSS'); }
+    if (act === 'look-area') {
+      const nb = D().noticesBoard, m = D().media[nb.media];
+      const r = await rectDialog({ title: 'Plocha pro text na tabuli', single: true, src: mediaSrc(nb.media, m.widths[m.widths.length - 1]), rects: nb.area ? [nb.area] : [],
+        hint: 'Tažením nakresli, kam se na tabuli píše – jen dovnitř břidlice, s okrajem od rámu. Text se v ní posouvá, když je ho víc. Rámeček přetáhneš, rohy změníš velikost.' });
+      if (r) { await api('PATCH', '/api/notices-board', { area: r[0] || null }); await refresh(); render(); status('ok', 'Plocha pro text uložena'); }
     }
     if (act === 'del') { confirmDel = id; return render(); }
     if (act === 'del-no') { confirmDel = null; return render(); }

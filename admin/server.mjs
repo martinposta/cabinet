@@ -121,6 +121,7 @@ async function api(req, res, url) {
   else if (m === 'PATCH' && p === '/api/wall') r = await C.updateWall(await readJson(req));
   else if (m === 'PATCH' && p === '/api/cabinet') r = await C.updateCabinet(await readJson(req));
   else if (m === 'PATCH' && p === '/api/doors') r = await C.setDoorsOpening(await readJson(req));
+  else if (m === 'PATCH' && p === '/api/notices-board') r = await C.setNoticesBoard(await readJson(req));
   else if (m === 'POST' && p === '/api/notices') r = await C.addNotice(await readJson(req));
   else if (m === 'PATCH' && (r = p.match(/^\/api\/notices\/(\w+)$/))) r = await C.updateNotice(r[1], await readJson(req));
   else if (m === 'DELETE' && (r = p.match(/^\/api\/notices\/(\w+)$/))) r = await C.deleteNotice(r[1]);

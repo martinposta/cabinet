@@ -38,7 +38,7 @@ handCandle(window.DOORS?.candle || {});
   if (nb) {
     const fit = () => { nb.style.visibility = "hidden"; nb.hidden = false; const r = nb.getBoundingClientRect(); nb.hidden = r.right > innerWidth - 8 || r.left < 8; nb.style.visibility = ""; };
     fit(); addEventListener("resize", fit); nb.querySelector("img")?.addEventListener("load", fit);
-    nb.addEventListener("click", async e => { e.stopPropagation(); (await import("./notices.js")).openNotices(cfg.notices || []); });
+    nb.addEventListener("click", async e => { e.stopPropagation(); (await import("./notices.js")).openNotices(cfg.notices || [], { look: cfg.noticesLook || null }); });
   }
 
   // ---- candlelight (pointer devices only; on touch the canvas is hidden by CSS) ----

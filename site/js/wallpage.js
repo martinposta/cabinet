@@ -69,7 +69,10 @@ export async function startWallPage(data) {
   const board = wall.board;
   if (board) {
     // the camera ignores wheel, keys and drags while it is open, as for the exhibit viewer
-    const open = e => { e.stopPropagation(); ui.viewerOpen = true; openNotices(data.notices || [], { onClose: () => { ui.viewerOpen = false; camera.invalidate(); } }); };
+    // the board's own picture close up, when one is set (admin → Aktuality)
+    const nb = data.noticesBoard, nbm = nb?.media && data.media?.[nb.media];
+    const look = nbm ? { src: new URL(mediaUrl(nb.media, nbm, nbm.widths[nbm.widths.length - 1]), document.baseURI).href, ar: nbm.w / nbm.h, area: nb.area || null } : null;
+    const open = e => { e.stopPropagation(); ui.viewerOpen = true; openNotices(data.notices || [], { look, onClose: () => { ui.viewerOpen = false; camera.invalidate(); } }); };
     board.el.addEventListener("click", open);
     board.el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(e); } });
     board.el.addEventListener("focus", () => { if (board.el.matches(":focus-visible")) camera.focusOn(board.x, board.y); });

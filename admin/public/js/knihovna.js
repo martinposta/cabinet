@@ -19,6 +19,7 @@ const GROUPS = {
   doors: ['Dveře', m => m.kind === 'doors'],
   plate: ['Cedulky', m => m.kind === 'plate'],
   surround: ['Obložení', m => m.kind === 'surround'],
+  board: ['Tabule', m => m.kind === 'board'],
   sound: ['Zvuky', m => m.kind === 'sound'],
 };
 const kindLabel = k => store.S.kinds[k]?.label || (k === 'sound' ? 'Zvuk' : k);
@@ -169,8 +170,9 @@ const CARDS = [
   ['room', 'Skříň / dveře', 'korpus, čela, samet, dveře', ['cabinet', 'drawer', 'tray', 'doors']],
   ['plate', 'Cedulka', 'jmenovka, štítek pod exponátem', ['plate']],
   ['surround', 'Obložení', 'bok, římsa, lambrie kolem místnosti', ['surround']],
+  ['board', 'Tabule – detail', 'aktuality zblízka (rám + břidlice)', ['board']],
 ];
-const SHORT = { item: 'stěna', gallery: 'galerie', tile: 'tapeta', grime: 'špína', cabinet: 'korpus', drawer: 'čelo', tray: 'samet', doors: 'dveře', plate: 'cedulka', surround: 'obložení', sound: 'zvuk' };
+const SHORT = { item: 'stěna', gallery: 'galerie', tile: 'tapeta', grime: 'špína', cabinet: 'korpus', drawer: 'čelo', tray: 'samet', doors: 'dveře', plate: 'cedulka', surround: 'obložení', board: 'tabule', sound: 'zvuk' };
 const cardOf = kind => CARDS.find(c => c[3].includes(kind))?.[0];
 let imp = null;   // { files: [{ file, url, kind, look, exhibit, small, previews }], cur, place, cut }
 

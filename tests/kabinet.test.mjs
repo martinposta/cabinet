@@ -68,7 +68,7 @@ test('preview renders the wall template at cabinet/: tokens filled, relative URL
 
 test('data.json is the public projection of cabinet.json', async () => {
   const pub = await (await fetch(BASE + '/preview/data.json')).json();
-  assert.deepEqual(Object.keys(pub).sort(), ['cabinet', 'handCandle', 'items', 'media', 'nameplate', 'notices', 'plates', 'room', 'settings', 'surround', 'view', 'wall']);
+  assert.deepEqual(Object.keys(pub).sort(), ['cabinet', 'handCandle', 'items', 'media', 'nameplate', 'notices', 'noticesBoard', 'plates', 'room', 'settings', 'surround', 'view', 'wall']);
   assert.deepEqual(Object.keys(pub.settings).sort(), ['fx', 'plateSubtitle', 'plateTitle']);
   assert.deepEqual(pub.settings.fx, { darkness: true, castShadows: true, frameLips: true, roomCandleShadows: true, handCandle: true });
 });
@@ -538,6 +538,18 @@ test('notices: timeline newest first, one board at most, a copy beside the doors
   await settle();
   doors = await (await fetch(BASE + '/preview/')).text();
   assert.doesNotMatch(doors, /id="nbDoors"/, 'no copy while the board is off the wall');
+  // the opened board's own picture: „board“ images only, the text area validated
+  const wrongKind = await call('PATCH', '/api/notices-board', { media: img.json.id });
+  assert.equal(wrongKind.status, 400, 'only a „board“ image');
+  const detail = await call('POST', '/api/media?name=board-detail.png&kind=board', undefined, await opaque(1200, 1300));
+  assert.equal(detail.status, 200, JSON.stringify(detail.json));
+  assert.equal((await call('PATCH', '/api/notices-board', { media: detail.json.id })).status, 200);
+  assert.equal((await call('PATCH', '/api/notices-board', { area: { x: 0.5, y: 0.1, w: 0.8, h: 0.8 } })).status, 400, 'past the picture');
+  assert.equal((await call('PATCH', '/api/notices-board', { area: { x: 0.12, y: 0.1, w: 0.76, h: 0.8 } })).status, 200);
+  await settle();
+  assert.equal((await (await fetch(BASE + '/preview/data.json')).json()).noticesBoard.media, detail.json.id);
+  assert.equal((await call('DELETE', `/api/media/${detail.json.id}`)).status, 400, 'in use by the board');
+  await call('PATCH', '/api/notices-board', { media: null });
   await call('PUT', '/api/layout', { items: data.items, nameplate: data.nameplate, rev: off.json.rev });
   for (const n of [a, b]) await call('DELETE', `/api/notices/${n.json.notice.id}`);
 });

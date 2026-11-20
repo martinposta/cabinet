@@ -168,6 +168,7 @@ export function usage(id) {
   if (D.handCandle?.media === id) out.push(['svíčka místo kurzoru', '#mistnost/efekty']);
   if (D.plates?.nameplate?.media === id) out.push(['jmenovka', '#mistnost/jmenovka']);
   if (D.plates?.plaque?.media === id) out.push(['štítky pod exponáty', '#mistnost/jmenovka']);
+  if (D.noticesBoard?.media === id) out.push(['tabule s aktualitami (detail)', '#aktuality']);
   for (const [k, l] of [['sideTop', 'hlavice boku'], ['sideMid', 'výplň boku'], ['cornice', 'římsa'], ['wainscot', 'lambrie']]) if (D.surround?.[k] === id) out.push([l, '#mistnost/oblozeni']);
   return out;
 }
