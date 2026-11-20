@@ -39,7 +39,7 @@ export function createViewer({ ui, onClose, media = {} }) {
     if(real.length){
       // the stage takes the cover's proportions; other photos are fitted inside it
       const c=media[real[0]];
-      V.frame.style.setProperty("--ar",(c.w/c.h).toFixed(4));
+      V.el.style.setProperty("--ar",(c.w/c.h).toFixed(4));   // on .viewer: the photo frame and the layout both read it
       caps=real.map(id=>it.captions?.[id]||"");
       // the photos are only created here; each one is fetched and *decoded off the main thread* before it
       // is shown (load()), the cover first and the rest after it – inserting four 2048 px photos at once
@@ -57,7 +57,7 @@ export function createViewer({ ui, onClose, media = {} }) {
     V.dots.hidden=false; V.stage.querySelectorAll(".nav").forEach(n=>n.hidden=false);
     caps=CAPS;
     const ar=it.m?it.aw/it.ah:it.shelf?4/3:it.aw/it.ah;
-    V.frame.style.setProperty("--ar",ar.toFixed(4));
+    V.el.style.setProperty("--ar",ar.toFixed(4));
     const W=1200, H=Math.round(W/ar);
     V.el.hidden=false; V.close.focus();
     painters().then(({paintArt,paintObjSlide})=>{

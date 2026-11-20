@@ -1035,18 +1035,18 @@
     },
     "9814ae499102": {
       "kind": "item",
-      "name": "DSCF2765.png",
-      "w": 1261,
-      "h": 1600,
+      "name": "Drenched Teal Lovecraftian Sculpture.png",
+      "w": 1114,
+      "h": 1412,
       "alpha": true,
       "widths": [
         640,
-        1261
+        1114
       ],
       "look": "candlelit",
-      "color": "#3a3b3b",
-      "bytes": 373703,
-      "v": 1,
+      "color": "#2f3332",
+      "bytes": 471012,
+      "v": 2,
       "addedAt": "2026-11-19T01:07:35.261Z"
     },
     "213c3e89760f": {
@@ -1315,15 +1315,15 @@
       "w": 400,
       "rotation": 1.4,
       "plaqueAt": {
-        "dx": 16.7,
-        "dy": -351
+        "dx": -13.1,
+        "dy": -10
       },
       "exhibit": {
         "slug": "worldmap",
         "inv": 18,
         "title": "World Map",
         "medium": "hand-painted on parchment",
-        "description": "Founded in Edinburgh in the 19th century, the Scottish firm John Bartholomew and Co. practically held a monopoly on putting the world on paper. In the 1830s, they landed the contract to produce maps for the famous Encyclopedia Britannica, a gig they managed to keep for a solid ninety years. As the British Empire expanded abroad and education boomed at home, their atlases sold like hotcakes.\n\nWe actually have this family business to thank for the brilliant idea of coloring British territories bright red so everyone could immediately see who owned half the planet, as well as the use of color gradients to show elevation. Thanks to their innovations, you can now get lost in the mountains with much better style and a clear idea of how steep the climb is going to be.",
+        "description": "Founded in Edinburgh in the 19th century, the Scottish firm John Bartholomew and Co. practically held a monopoly on putting the world on paper. In the 1830s, they landed the contract to produce maps for the famous Encyclopedia Britannica, a gig they managed to keep for a solid ninety years. As the British Empire expanded abroad and education boomed at home, their atlases sold like hotcakes.\n\nWe actually have this family business to thank for the brilliant idea of coloring British territories bright red so everyone could immediately see who owned half the planet, as well as the use of color gradients to show elevation. Thanks to their innovations, you can now get lost in the mountains with much better style and a clear idea of how steep the climb is going to be.\n\nYear created: 2002\nDimensions: 50 x 75",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1344,15 +1344,15 @@
       "w": 323.5,
       "rotation": -0.2,
       "plaqueAt": {
-        "dx": -22.8,
-        "dy": -354.9
+        "dx": -1.5,
+        "dy": -0.9
       },
       "exhibit": {
         "slug": "lostmapofamerica",
         "inv": 17,
         "title": "Lost map of America",
         "medium": "hand-drawn on parchment",
-        "description": "Compiled in 1513 by Ottoman admiral and cartographer Piri Reis, this legendary world map was proudly presented to Sultan Selim I right after the conquest of Egypt. What the ruler actually did with it remains a total mystery, as the map promptly vanished from history for centuries, seemingly tucked away in a very deep drawer.\n\nWhen the surviving one-third was finally rediscovered in 1929 at Istanbul's Topkapi Palace, it caused an international sensation. Experts realized that Piri Reis had copied a portion of an otherwise lost map drawn by Christopher Columbus himself. In short, you are looking at the most valuable and historic piece of copied homework in the history of navigation.",
+        "description": "Compiled in 1513 by Ottoman admiral and cartographer Piri Reis, this legendary world map was proudly presented to Sultan Selim I right after the conquest of Egypt. What the ruler actually did with it remains a total mystery, as the map promptly vanished from history for centuries, seemingly tucked away in a very deep drawer.\n\nWhen the surviving one-third was finally rediscovered in 1929 at Istanbul's Topkapi Palace, it caused an international sensation. Experts realized that Piri Reis had copied a portion of an otherwise lost map drawn by Christopher Columbus himself. In short, you are looking at the most valuable and historic piece of copied homework in the history of navigation.\n\nYear created: 1998\nDimensions: 90 x 65 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1427,8 +1427,8 @@
     {
       "id": "cap2",
       "media": "16119c21ba07",
-      "x": 1233.78,
-      "y": 1113.97,
+      "x": 1419.9,
+      "y": 1124.09,
       "w": 126.28,
       "rotation": 0,
       "sits": "mahogany-cubby-bookcase-against-black-ba-2",
@@ -1577,7 +1577,8 @@
       "x": 1332.28,
       "y": 902.19,
       "w": 963.43,
-      "rotation": 0
+      "rotation": 0,
+      "z": 1
     },
     {
       "id": "monstrum1-2",
@@ -1608,8 +1609,8 @@
     {
       "id": "netopyr-2",
       "media": "40e29b1e37dd",
-      "x": 1243.93,
-      "y": 515.17,
+      "x": 1416.03,
+      "y": 818.65,
       "w": 147.36,
       "rotation": 0,
       "sits": "mahogany-cubby-bookcase-against-black-ba-2"
@@ -1624,18 +1625,9 @@
       "sits": "mahogany-cubby-bookcase-against-black-ba-2"
     },
     {
-      "id": "antique-leather-books-on-black-backgroun-2",
-      "media": "67ce4e1fdb6d",
-      "x": 1420.75,
-      "y": 873.59,
-      "w": 152.26,
-      "rotation": 0,
-      "sits": "mahogany-cubby-bookcase-against-black-ba-2"
-    },
-    {
       "id": "kytka4-2",
       "media": "03ecdab33521",
-      "x": 1069.39,
+      "x": 1241.52,
       "y": 1130.67,
       "w": 120,
       "rotation": 0,
@@ -1657,7 +1649,7 @@
         "inv": 4,
         "title": "Skull of Lars Møller",
         "medium": "",
-        "description": "Meet  Lars, a guy who lost a very heated argument during the Battle of Visby on July 27, 1361. While the Danish army was busy sorting out the local Gutnic peasants, Lars caught a severe case of an axe to the head, leaving a deeply memorable impression on his skull.\nTo top it all off, one of his eyes miraculously turned into something resembling pure amber over the centuries, which conservators managed to lovingly stabilize.",
+        "description": "Meet  Lars, a guy who lost a very heated argument during the Battle of Visby on July 27, 1361. While the Danish army was busy sorting out the local Gutnic peasants, Lars caught a severe case of an axe to the head, leaving a deeply memorable impression on his skull.\nTo top it all off, one of his eyes miraculously turned into something resembling pure amber over the centuries, which conservators managed to lovingly stabilize.\n\nYear: 1361\nDimensions: 17,6 x 13,6 x 21,4 cm",
         "tags": [],
         "gallery": [
           "92fd36086931",
@@ -1683,7 +1675,7 @@
         "inv": 6,
         "title": "Mockup of David",
         "medium": "",
-        "description": "Before tackling his famous 17-foot masterpiece, Michelangelo carved this smaller scale model just to make sure he could nail the nose. Think of it as a rough draft, only chiseled out of top-shelf Italian marble instead of sketched on paper.\n\nMysteriously lost for centuries, the head resurfaced a few years ago and was promptly snapped up by a private collector. Experts consider its value \"priceless,\" which in the art world is speak for a number that makes even billionaires break into a cold sweat.",
+        "description": "Before tackling his famous 17-foot masterpiece, Michelangelo carved this smaller scale model just to make sure he could nail the nose. Think of it as a rough draft, only chiseled out of top-shelf Italian marble instead of sketched on paper.\n\nMysteriously lost for centuries, the head resurfaced a few years ago and was promptly snapped up by a private collector. Experts consider its value \"priceless,\" which in the art world is speak for a number that makes even billionaires break into a cold sweat.\n\nYear created: Early 1501\nDimensions: 30,6 x 21,8 x 19,2 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1706,7 +1698,7 @@
         "inv": 2,
         "title": "Mysterious Idol",
         "medium": "",
-        "description": "Measuring just 21 centimeters tall, this figurine of a winged, tentacled creature bears the word \"Cthulhu\" and several strange symbols carved into its side. Nobody has a clue what the name means, and the script remains completely undeciphered to this day.\n\nThe real puzzle, however, isn't the unknown language, but the fact that the idol is constantly wet for completely unexplained reasons. Experts have already tried dehumidifiers, hair dryers, and lab tests, yet the stone stubbornly keeps seeping water, as if it were just pulled from the ocean floor.",
+        "description": "Measuring just 21 centimeters tall, this figurine of a winged, tentacled creature bears the word \"Cthulhu\" and several strange symbols carved into its side. Nobody has a clue what the name means, and the script remains completely undeciphered to this day.\n\nThe real puzzle, however, isn't the unknown language, but the fact that the idol is constantly wet for completely unexplained reasons. Experts have already tried dehumidifiers, hair dryers, and lab tests, yet the stone stubbornly keeps seeping water, as if it were just pulled from the ocean floor.\n\nYear created: Inconclusive carbon dating \nDimensions: 12,5 x 6 x 6 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1729,7 +1721,7 @@
         "inv": 11,
         "title": "The King in Yellow",
         "medium": "",
-        "description": "Standing an impressive 45 centimeters tall, this statue depicts a figure draped in a bright yellow robe, using a tentacle to remove a white wooden mask from where its face should be. The catch is that there is no face underneath at all. To this day, scientists are fiercely debating the artifact's true meaning and original purpose.\n\nThe only certainty is that the piece has a rather peculiar effect on anyone who gets too close. Those who stare at it for too long suddenly start rambling about a mysterious \"yellow sign\" and promptly lose their grip on sanity.",
+        "description": "Standing an impressive 45 centimeters tall, this statue depicts a figure draped in a bright yellow robe, using a tentacle to remove a white wooden mask from where its face should be. The catch is that there is no face underneath at all. To this day, scientists are fiercely debating the artifact's true meaning and original purpose.\n\nThe only certainty is that the piece has a rather peculiar effect on anyone who gets too close. Those who stare at it for too long suddenly start rambling about a mysterious \"yellow sign\" and promptly lose their grip on sanity.\n\nYear created: Inconclusive carbon dating \nDimensions: 42 x 29 x 21,5 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1751,7 +1743,7 @@
         "inv": 9,
         "title": "Sóma no furudairi",
         "medium": "",
-        "description": "When Japanese artist Utagawa Kuniyoshi finished the now famous triptych Soma no furudairi in 1844, he had no idea where his art would take him. Not long after completing it, he was persuaded by Dutch envoys who begged him for a showcase of true Japanese beauty and aesthetics for King William II.\nInstead of a boring diplomatic gift, however, the Dutch monarch got a hefty serving of drama, sorcery, and calcium featuring samurais battling a giant skeleton. It makes the ideal bedroom decor if you want to be sure your wake-up call comes from rattling bones rather than a normal alarm clock.",
+        "description": "When Japanese artist Utagawa Kuniyoshi finished the now famous triptych Soma no furudairi in 1844, he had no idea where his art would take him. Not long after completing it, he was persuaded by Dutch envoys who begged him for a showcase of true Japanese beauty and aesthetics for King William II.\nInstead of a boring diplomatic gift, however, the Dutch monarch got a hefty serving of drama, sorcery, and calcium featuring samurais battling a giant skeleton. It makes the ideal bedroom decor if you want to be sure your wake-up call comes from rattling bones rather than a normal alarm clock.\n\nYear painted: 1845\nDimensions: 50 x 80 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1773,7 +1765,7 @@
         "inv": 7,
         "title": "DL-44 Hero prop",
         "medium": "",
-        "description": "The DL-44 is one of the most iconic weapons in the galaxy, made famous by Han Solo, the smuggler who played a key role in the Rebellion against the Empire. This heavy blaster, based on military-grade designs, was known for its high stopping power and reliability, making it the perfect choice for skilled gunslingers.\nThe displayed piece is not just a replica. It is an authentic prop from the production of Star Wars (1977). Only three units were created for filmmaking, and this is one of the few surviving originals. Even though it is unknown whether this specific one was used in the actual filming, its intricate details, including realistic weathering and modifications for special effects, make it a rare artifact, cherished by both Star Wars fans and collectors of cinematic history.",
+        "description": "The DL-44 is one of the most iconic weapons in the galaxy, made famous by Han Solo, the smuggler who played a key role in the Rebellion against the Empire. This heavy blaster, based on military-grade designs, was known for its high stopping power and reliability, making it the perfect choice for skilled gunslingers.\nThe displayed piece is not just a replica. It is an authentic prop from the production of Star Wars (1977). Only three units were created for filmmaking, and this is one of the few surviving originals. Even though it is unknown whether this specific one was used in the actual filming, its intricate details, including realistic weathering and modifications for special effects, make it a rare artifact, cherished by both Star Wars fans and collectors of cinematic history.\n\nYear created: 1976\nDimensions: 17,3 x 30,5 x 7,6 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1802,7 +1794,7 @@
         "inv": 5,
         "title": "The Lost Arch found",
         "medium": "",
-        "description": "This front page of The Egyptian Gazette from August 4, 1936, breaks a story that would make even Moses drop his tablets. Under the bold headline \"Lost Ark Discovered,\" the world first learned that famous American archaeologist Indiana Jones had actually tracked down the legendary biblical Ark of the Covenant, apparently using his usual blend of academic brilliance, a bullwhip, and a total disregard for basic safety protocols.\n\nThe find of the century sparked an instant global sensation, though as is often the case with ancient souvenirs, the celebration didn't last long. If you decide to lean in for a closer look at this rare newspaper, you might want to keep your eyes tightly shut just in case something flies out and melts your face off.",
+        "description": "This front page of The Egyptian Gazette from August 4, 1936, breaks a story that would make even Moses drop his tablets. Under the bold headline \"Lost Ark Discovered,\" the world first learned that famous American archaeologist Indiana Jones had actually tracked down the legendary biblical Ark of the Covenant, apparently using his usual blend of academic brilliance, a bullwhip, and a total disregard for basic safety protocols.\n\nThe find of the century sparked an instant global sensation, though as is often the case with ancient souvenirs, the celebration didn't last long. If you decide to lean in for a closer look at this rare newspaper, you might want to keep your eyes tightly shut just in case something flies out and melts your face off.\n\nYear printed: August, 1936\nDimensions: 40,5 x 29,4 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1831,7 +1823,7 @@
         "inv": 10,
         "title": "One Giant Leap for Mankind",
         "medium": "",
-        "description": "This original print of The New York Times covering the Moon landing is a collector's dream, though it was a total nightmare for the paper's management at the time. When the editor-in-chief did a final check and discovered that an underpaid editor had slipped in a bit of sabotage to discredit the newspaper, all hell broke loose.\n\nThe entire print run was immediately destroyed before it could ever hit the newsstands. Despite every effort to wipe the mistake off the face of the Earth, a few of these rogue copies managed to survive as a priceless reminder that you should never skimp on your editors' salaries.\ndated: 5.7.1978",
+        "description": "This original print of The New York Times covering the Moon landing is a collector's dream, though it was a total nightmare for the paper's management at the time. When the editor-in-chief did a final check and discovered that an underpaid editor had slipped in a bit of sabotage to discredit the newspaper, all hell broke loose.\n\nThe entire print run was immediately destroyed before it could ever hit the newsstands. Despite every effort to wipe the mistake off the face of the Earth, a few of these rogue copies managed to survive as a priceless reminder that you should never skimp on your editors' salaries.\n\nYear printed: July 20, 1969\nDimensions: 54,7 x 34,1 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1860,7 +1852,7 @@
         "inv": 3,
         "title": "Two Faces of Terror",
         "medium": "",
-        "description": "Left: An authentic pencil sketch drawn by H. P. Lovecraft himself. Formerly housed in a Chicago historical museum and now held in a private collection, this rare piece proves that a simple pencil and a bit of talent are all it takes to summon cosmic dread.\nRight: A widely shared, internet-famous ink drawing that is actually a remarkably bad forgery. The clumsy attempt to artificially age the paper looks less like centuries of patina and more like an unfortunate accident with a wet tea bag. It serves as a prime showcase of what happens when an amateur tries to copy a genius.",
+        "description": "Left: An authentic pencil sketch drawn by H. P. Lovecraft himself. Formerly housed in a Chicago historical museum and now held in a private collection, this rare piece proves that a simple pencil and a bit of talent are all it takes to summon cosmic dread.\n\nRight: A widely shared, internet-famous ink drawing that is actually a remarkably bad forgery. The clumsy attempt to artificially age the paper looks less like centuries of patina and more like an unfortunate accident with a wet tea bag. It serves as a prime showcase of what happens when an amateur tries to copy a genius.\n\nYear created: 1934\nDimensions left: 22 x 15,5 cm, right: 22,5 x 17,2 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
@@ -1889,7 +1881,7 @@
         "inv": 8,
         "title": "DL-44M",
         "medium": "",
-        "description": "The DL-44M is a customized variant of the iconic DL-44 blaster, designed with a focus on mobility and efficiency. Unlike the standard model, it lacks a telescopic sight, making it a lighter and more compact weapon. Thanks to these features, it became a favored choice among Rebel agents and spies during covert missions against the Empire, where stealth and speed were essential. Its ergonomically redesigned grip allows for better handling and improved accuracy in narrow corridors and the confined spaces of Imperial bases.",
+        "description": "The DL-44M is a customized variant of the iconic DL-44 blaster, designed with a focus on mobility and efficiency. Unlike the standard model, it lacks a telescopic sight, making it a lighter and more compact weapon. Thanks to these features, it became a favored choice among Rebel agents and spies during covert missions against the Empire, where stealth and speed were essential. Its ergonomically redesigned grip allows for better handling and improved accuracy in narrow corridors and the confined spaces of Imperial bases.\n\nYear created: 3 ABY\nDimensions:  16,2 x 30 x 4 cm",
         "tags": [],
         "gallery": [],
         "plaque": true
