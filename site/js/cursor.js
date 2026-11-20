@@ -27,22 +27,42 @@ export function handCandle({ src, w, h, fx, fy, cursor }) {
       + `cursor:-webkit-image-set(url("${abs(cursor.x1)}") 1x,url("${abs(cursor.x2)}") 2x) ${hx} ${hy},auto!important}`;
     // order matters: the last declaration a browser understands wins; Chrome and Safari take one of the
     // image-set lines, a browser that knows neither keeps the plain url()
+    // Chrome (and Safari) refuse a cursor over 32 px that would stick out of the window and show the plain
+    // arrow instead – so near an edge (closer than the candle reaches past its flame) the system cursor is
+    // hidden and the image below takes over; a frame behind the mouse there, but still a candle (2026-11-20)
+    st.textContent += `html body.candle-native.candle-edge:not(.viewer-open),html body.candle-native.candle-edge:not(.viewer-open) *{cursor:none!important}`;
     document.head.appendChild(st);
     document.body.classList.add("candle-native");
-    return null;
+    const el = follower(src, w, h, fx, fy, hx, hy, cursor.w, cursor.h);
+    return el;
   }
+  document.body.classList.add("candle-cursor");
+  return follower(src, w, h, fx, fy);
+}
+
+/**
+ * The candle as an image moved by transform. Alone (no system cursor) it follows the pointer everywhere;
+ * with the system cursor (`cw`×`ch` with its hotspot at hx, hy) it only shows near the window's edges.
+ */
+function follower(src, w, h, fx, fy, hx, hy, cw, ch) {
   const el = new Image(w, h);
   el.className = "hand-candle"; el.alt = ""; el.decoding = "async"; el.draggable = false; el.hidden = true;
   el.src = src;
   document.body.appendChild(el);
-  document.body.classList.add("candle-cursor");
-  const ox = fx * w, oy = fy * h;
+  const ox = fx * w, oy = fy * h, edges = cw != null, B = document.body;
   addEventListener("pointermove", e => {
     if (e.pointerType === "touch") return;
+    if (edges) {
+      // where the system cursor would stick out of the window (one px of slack)
+      const x = e.clientX, y = e.clientY, vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      const near = x < hx + 1 || y < hy + 1 || x > vw - (cw - hx) - 1 || y > vh - (ch - hy) - 1;
+      if (near !== B.classList.contains("candle-edge")) B.classList.toggle("candle-edge", near);
+      if (!near) { if (!el.hidden) el.hidden = true; return; }
+    }
     if (el.hidden) el.hidden = false;
     el.style.transform = `translate3d(${e.clientX - ox}px,${e.clientY - oy}px,0)`;
   }, { passive: true });
-  document.documentElement.addEventListener("pointerleave", () => { el.hidden = true; });
+  document.documentElement.addEventListener("pointerleave", () => { el.hidden = true; B.classList.remove("candle-edge"); });
   return el;
 }
 
