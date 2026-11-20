@@ -67,6 +67,13 @@ function plateShape(P) {
 }
 /** How an item's silhouette is drawn, or null while its image has not loaded yet. */
 function shapeOf(it) {
+  const s = shapeOf0(it);
+  if (!s || !it.flip) return s;
+  // a mirrored item casts a mirrored silhouette
+  const w = it.ow ?? it.aw;
+  return c => { c.save(); c.translate(w, 0); c.scale(-1, 1); s(c); c.restore(); };
+}
+function shapeOf0(it) {
   const w = it.ow ?? it.aw, h = it.oh ?? it.ah;
   if (it.m) { const img = it.el; return ready(img) ? c => c.drawImage(img, 0, 0, w, h) : null; }
   if (it.cabTop) return ready(it.img) ? c => c.drawImage(it.img, 0, 0, w, h) : null;

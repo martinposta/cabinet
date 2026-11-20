@@ -210,6 +210,14 @@ test('items: hang a real image, used media cannot be deleted, data.json carries 
   const ex = await call('PATCH', `/api/items/${id}`, { exhibit: { title: 'Test', slug: 'Bad Slug' } });
   assert.equal(ex.status, 400);
   assert.equal((await call('PATCH', `/api/items/${id}`, { exhibit: { title: 'Test', slug: 'test-piece' } })).json.item.exhibit.inv, 1);
+  // mirroring: stored only while on, anything but a boolean refused
+  assert.equal((await call('PATCH', `/api/items/${id}`, { flip: true })).json.item.flip, true);
+  assert.equal((await call('PATCH', `/api/items/${id}`, { flip: 'yes' })).status, 400);
+  assert.equal('flip' in (await call('PATCH', `/api/items/${id}`, { flip: false })).json.item, false);
+  // locked in the editor: the same boolean rules
+  assert.equal((await call('PATCH', `/api/items/${id}`, { locked: true })).json.item.locked, true);
+  assert.equal((await call('PATCH', `/api/items/${id}`, { locked: 1 })).status, 400);
+  assert.equal('locked' in (await call('PATCH', `/api/items/${id}`, { locked: false })).json.item, false);
   await settle();
   const pub = await (await fetch(BASE + '/preview/data.json')).json();
   assert.equal(pub.items[0].media, itemId);

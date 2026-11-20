@@ -55,6 +55,7 @@ export function startMobile(data) {
     btn.setAttribute('aria-label', `${it.title}${it.medium ? ', ' + it.medium : ''}. Open the gallery`);
     const w = widthOf(it), im = mediaImg(it.mediaId, it.m, w, '');
     im.style.width = `${w}px`; im.loading = 'lazy';
+    if (it.flip) im.style.transform = 'scaleX(-1)';
     btn.appendChild(im);
     btn.addEventListener('click', () => router.open(it, true));
     fig.appendChild(btn);

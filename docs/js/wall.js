@@ -31,7 +31,7 @@ export function runtimeItem(d, i, MEDIA){
   const it={ id:d.id, x:d.x, y:d.y, rotation:d.rotation||0, seed:p.seed??(17+i*53), aw:p.w, ah:p.h,
     art:p.paint==="art"?p.name:undefined, shelf:p.paint==="object"?p.name:undefined,
     shape:f.shape||"rect", mat:f.mat||"gold", fw:f.fw??20, ornate:!!f.ornate,
-    on:d.on, drawer:d.drawer, px:d.dx, py:d.dy, work:!!ex, opening:d.opening, sits:d.sits, pqAt:d.plaqueAt, opens:d.opens };
+    on:d.on, drawer:d.drawer, px:d.dx, py:d.dy, work:!!ex, opening:d.opening, sits:d.sits, pqAt:d.plaqueAt, opens:d.opens, flip:!!d.flip, z:d.z||0 };   // z = Vrstva: it was never copied, so Dozadu/Dopředu changed nothing on screen
   // a real image: w is its world width, the height follows its aspect; aw/ah feed the cabinet code
   if(m){ Object.assign(it,{ mediaId:d.media, m, aw:d.w, ah:d.w*m.h/m.w, art:undefined, shelf:undefined }); }
   if(ex) Object.assign(it,{ slug:ex.slug, title:ex.title, medium:ex.medium||"", desc:ex.description||"",
@@ -191,7 +191,7 @@ export function buildWall(world, data){
     hang.style.cssText=`left:${it.x-it.ow/2}px;top:${it.y-it.oh/2}px;width:${it.ow}px;--i:${k}${it.z?`;z-index:${it.z}`:""}`;
     if(it.m){
       const im=mediaImg(it.mediaId,it.m,it.ow,`piece${it.work?" work":""}${it.opens?" opens":""}`);
-      im.style.cssText=`width:${it.ow}px;height:${it.oh}px;--tilt:${it.rotation.toFixed(2)}deg;background:${it.m.alpha?"transparent":it.m.color}`;
+      im.style.cssText=`width:${it.ow}px;height:${it.oh}px;--tilt:${it.rotation.toFixed(2)}deg;${it.flip?"--flip:-1;":""}background:${it.m.alpha?"transparent":it.m.color}`;
       if(it.work){ im.tabIndex=0; im.setAttribute("role","button"); im.alt=`${it.title}, ${it.medium}. Open the gallery`; }
       // the notices board: opens the notices instead of a gallery (wallpage.js), never an exhibit
       if(it.opens){ im.tabIndex=0; im.setAttribute("role","button"); im.alt="Notices board. Open the notices"; }
@@ -266,7 +266,7 @@ export function buildWall(world, data){
     // objects standing on the top board
     CAB_TOP.forEach(it=>{
       const im=it.m?mediaImg(it.mediaId,it.m,it.aw,""):document.createElement("img"); im.className=`cab-obj${it.work?" work":""}`; im.alt=it.work?`${it.title}, ${it.medium}. Open the gallery`:""; im.draggable=false; im.decoding="async";
-      im.style.cssText=`left:${CAB.w/2+it.x-it.aw/2}px;top:${4-it.ah}px;width:${it.aw}px;height:${it.ah}px;--tilt:${it.rotation.toFixed(2)}deg`;
+      im.style.cssText=`left:${CAB.w/2+it.x-it.aw/2}px;top:${4-it.ah}px;width:${it.aw}px;height:${it.ah}px;--tilt:${it.rotation.toFixed(2)}deg${it.flip?";--flip:-1":""}${it.z?`;z-index:${it.z}`:""}`;
       if(it.work){ im.tabIndex=0; im.setAttribute("role","button"); }
       im.dataset.id=it.id;
       el.appendChild(im); it.img=im; it.el=im;
@@ -281,7 +281,7 @@ export function buildWall(world, data){
       const tray=D.el.querySelector(".tray");
       const im=it.m?mediaImg(it.mediaId,it.m,it.aw,""):document.createElement("img"); im.className=`item${it.work?" work":""}`; im.alt=it.work?`${it.title}, ${it.medium}. Open the gallery`:""; im.draggable=false; im.decoding="async";
       const sc=Math.min(1,(D.h*.62)/it.ah), w=it.aw*sc, h=it.ah*sc;
-      im.style.cssText=`left:${D.w*it.px-w/2}px;top:${D.h*it.py-h/2}px;width:${w}px;height:${h}px;--tilt:${it.rotation.toFixed(2)}deg`;
+      im.style.cssText=`left:${D.w*it.px-w/2}px;top:${D.h*it.py-h/2}px;width:${w}px;height:${h}px;--tilt:${it.rotation.toFixed(2)}deg${it.flip?";--flip:-1":""}${it.z?`;z-index:${it.z}`:""}`;
       if(it.work){ im.tabIndex=-1; im.setAttribute("role","button"); }
       im.dataset.id=it.id;
       tray.appendChild(im); it.img=im; it.el=im;

@@ -134,7 +134,7 @@ function drawOverlay() {
   // handles: four corners (size, aspect kept) and a rotation knob, for one item on the wall or cabinet
   const one = sel.size === 1 && primary && primary !== NAMEPLATE ? item(primary) : null;
   // in a drawer only the knob: its size is fitted to the drawer, so corners would not mean anything
-  const mode = !one ? null : one.drawer == null ? 'all' : 'rot';
+  const mode = !one || one.locked ? null : one.drawer == null ? 'all' : 'rot';
   if (handles && handles.mode !== mode) { handles.forEach(h => h.remove()); handles = null; }
   const can = !!mode;
   if (can && !handles) {
@@ -269,12 +269,15 @@ function onWorldDown(e) {
   const id = el.dataset.id;
   if (e.shiftKey) { select(id, true); return; }
   if (!sel.has(id)) select(id, false); else { primary = id; renderInspector(); markLayers(); }
+  // locked (Inspektor → Zamknout, key L): selected, but it does not move – nor do other locked ones selected with it
+  if (isLocked(id)) { status('ok', 'Zamčené – nepohne se. Odemkneš v Inspektoru (L).'); return; }
+  const free = [...sel].filter(i => !isLocked(i));
   const z = camera.zoom();
   // what stands on a dragged bookcase goes along with it
-  const riders = ridersOf([...sel].filter(i => i !== NAMEPLATE));
-  const els = [...sel, ...riders].map(i => ({ id: i, el: elOf(i) })).filter(x => x.el)
+  const riders = ridersOf(free.filter(i => i !== NAMEPLATE)).filter(i => !isLocked(i));
+  const els = [...free, ...riders].map(i => ({ id: i, el: elOf(i) })).filter(x => x.el)
     .map(x => ({ ...x, ol: parseFloat(x.el.style.left) || 0, ot: parseFloat(x.el.style.top) || 0 }));
-  const moving = new Set([...sel, ...riders]);
+  const moving = new Set([...free, ...riders]);
   // snap targets: the tops of other things on the wall, the cabinet board, and the shelves of bookcases
   const targets = $$('#world .hang[data-id], #world .cab-obj[data-id]').filter(t => !moving.has(t.dataset.id)).map(worldBox);
   targets.push({ x0: W.CAB.x0, x1: W.CAB.x0 + W.CAB.w, y0: W.CAB.top, cabinet: true });
@@ -433,6 +436,23 @@ function startRotate(e) {
 }
 
 // ---------- keyboard ----------
+const isLocked = id => id !== NAMEPLATE && !!item(id)?.locked;
+// lock / unlock the selection; with a mixed selection all of them end up locked first
+function lockSelected() {
+  const ds = [...sel].map(item).filter(Boolean);
+  if (!ds.length) return;
+  const on = ds.some(d => !d.locked);
+  commit('lock', () => { for (const d of ds) { if (on) d.locked = true; else delete d.locked; } });
+  markOverlay();   // the handles go (or come back) now, not on the next mouse move
+  status('ok', on ? 'Zamčeno – nepohne se myší ani šipkami' : 'Odemčeno');
+}
+// mirror the selected images left to right; with a mixed selection all of them end up mirrored first
+function flipSelected() {
+  const ds = [...sel].map(item).filter(d => d?.media);
+  if (!ds.length) return;
+  const on = ds.some(d => !d.flip);
+  commit('flip', () => { for (const d of ds) { if (on) d.flip = true; else delete d.flip; } });
+}
 const typing = e => e.target.closest?.('input, textarea, select, [contenteditable]');
 function onKey(e) {
   if (!active || typing(e) || document.querySelector('.modal, .sheet')) return;
@@ -442,20 +462,23 @@ function onKey(e) {
   else if (mod && e.key.toLowerCase() === 'y') doRedo();
   else if (mod && e.key.toLowerCase() === 'd' && sel.size) duplicate();
   else if (e.key === 'Escape') select(null);
+  else if (!mod && e.key.toLowerCase() === 'h' && sel.size) flipSelected();
+  else if (!mod && e.key.toLowerCase() === 'l' && sel.size) lockSelected();
   else if ((e.key === 'Backspace' || e.key === 'Delete') && sel.size) removeSelected();
   else if ((e.key === '[' || e.key === ']') && sel.size) {
-    commit('rotate', () => { for (const id of sel) { const d = item(id); if (d) { const lim = d.drawer != null ? 180 : 45; d.rotation = r2(Math.max(-lim, Math.min(lim, (d.rotation || 0) + (e.key === ']' ? 0.5 : -0.5)))); } } });
+    commit('rotate', () => { for (const id of sel) { const d = item(id); if (d && !d.locked) { const lim = d.drawer != null ? 180 : 45; d.rotation = r2(Math.max(-lim, Math.min(lim, (d.rotation || 0) + (e.key === ']' ? 0.5 : -0.5)))); } } });
   } else if (e.key.startsWith('Arrow') && sel.size) {
     const step = e.shiftKey ? 10 : 1, k = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
     commit('nudge', D => {
       for (const id of sel) {
         if (id === NAMEPLATE) { D.nameplate.x += k[0] * step; D.nameplate.y += k[1] * step; continue; }
         const d = item(id);
+        if (d.locked) continue;
         if (d.drawer != null) { const dr = W.DRAWERS[d.drawer]; d.dx = r2(Math.min(1, Math.max(0, d.dx + k[0] * step / dr.w))); d.dy = r2(Math.min(1, Math.max(0, d.dy + k[1] * step / dr.h))); }
         else { d.x = r2(d.x + k[0] * step); if (where(d) === 'wall') d.y = r2(d.y + k[1] * step); }
       }
       // what stands on a nudged bookcase moves with it
-      for (const id of ridersOf([...sel].filter(i => i !== NAMEPLATE))) { const d = item(id); d.x = r2(d.x + k[0] * step); d.y = r2(d.y + k[1] * step); }
+      for (const id of ridersOf([...sel].filter(i => i !== NAMEPLATE && !isLocked(i)))) { const d = item(id); if (d.locked) continue; d.x = r2(d.x + k[0] * step); d.y = r2(d.y + k[1] * step); }
     });
   } else handled = false;
   // capture phase on window: the camera's own arrow/zoom keys never see what the editor handled
@@ -511,7 +534,7 @@ export function placeOnWall(ids) {
 function layerRow(d) {
   const ex = d.exhibit, m = d.media && D().media[d.media];
   const pre = d.drawer != null ? `<span class="lp">Š${d.drawer + 1}</span>` : `<span class="lt thumb" style="background-image:url('${mediaSrc(d.media)}')"></span>`;
-  const tail = (m?.light ? '<span class="sun" title="Svítí">☀</span>' : '') + (ex ? `<span class="invn">${inv(ex.inv)}</span>` : '<span class="lm">dekorace</span>');
+  const tail = (m?.light ? '<span class="sun" title="Svítí">☀</span>' : '') + (ex ? `<span class="invn">${inv(ex.inv)}</span>` : '<span class="lm">dekorace</span>') + (d.locked ? '<span class="lm" title="Zamčená poloha">· zamčeno</span>' : '');
   return `<button class="layer" data-l="${esc(d.id)}">${pre}<span class="ln">${esc(itemName(d))}</span>${tail}</button>`;
 }
 function renderLayers() {
@@ -566,6 +589,7 @@ function renderInspector() {
     box.innerHTML = `<div class="empty-insp"><h2>${sel.size} vybrané věci</h2>
       <p class="hint">Táhni kteroukoli z nich, pohnou se všechny. Šipky posouvají všechny najednou.</p>
       <div class="stack"><span class="label">Vrstva</span><div class="row fill"><button class="btn" data-act="z-">Dozadu</button><button class="btn" data-act="z+">Dopředu</button></div></div>
+      <div class="row"><button class="btn" data-act="lock" title="Zamknout polohu (L)">Zamknout / odemknout</button><button class="btn" data-act="flip" title="Zrcadlit vodorovně (H)">↔ Zrcadlit</button></div>
       <div class="row"><button class="btn danger" data-act="delete">Sundat ze stěny</button></div></div>`;
     return;
   }
@@ -587,19 +611,21 @@ function renderInspector() {
         ${d.plaqueAt ? '<button class="btn" data-act="pq-reset">Vrátit cedulku na místo</button>' : ''}</div>` : '';
   let body = '';
   if (tab === 'umisteni') {
+    const lk = d.locked ? ' disabled' : '';   // locked: the position is shown, not edited
     body = `<div class="stack"><span class="label">Kde je</span>
         <div class="seg">
-          <button data-place="wall" aria-pressed="${place === 'wall'}">Stěna</button>
-          <button data-place="cabinet" aria-pressed="${place === 'cabinet'}">Skříň</button>
-          <select class="field" data-k="drawer" aria-label="Šuplík" style="flex:1;${place === 'drawer' ? 'background:var(--seg);color:var(--ink-hi)' : 'background:transparent;border:0;color:var(--ink-mid)'}">
+          <button data-place="wall" aria-pressed="${place === 'wall'}"${lk}>Stěna</button>
+          <button data-place="cabinet" aria-pressed="${place === 'cabinet'}"${lk}>Skříň</button>
+          <select class="field" data-k="drawer" aria-label="Šuplík"${lk} style="flex:1;${place === 'drawer' ? 'background:var(--seg);color:var(--ink-hi)' : 'background:transparent;border:0;color:var(--ink-mid)'}">
             <option value="">Šuplík ▾</option>${Array.from({ length: drawers }, (_, i) => `<option value="${i}"${d.drawer === i ? ' selected' : ''}>Šuplík ${i + 1}</option>`).join('')}
           </select>
         </div></div>
       <div class="grid2">
-        ${place === 'drawer' ? pfx('dx', 'X', d.dx, 'title="V šuplíku, 0–1"') + pfx('dy', 'Y', d.dy, 'title="V šuplíku, 0–1"') : pfx('x', 'X', d.x) + (place === 'wall' ? pfx('y', 'Y', d.y) : '<span></span>')}
-        ${d.media ? pfx('w', 'Š', d.w, 'title="Šířka ve světě"') : pfx('ph.w', 'Š', d.placeholder.w)}
-        ${pfx('rotation', '∠', d.rotation || 0, 'title="Natočení ve stupních"')}
+        ${place === 'drawer' ? pfx('dx', 'X', d.dx, 'title="V šuplíku, 0–1"' + lk) + pfx('dy', 'Y', d.dy, 'title="V šuplíku, 0–1"' + lk) : pfx('x', 'X', d.x, lk) + (place === 'wall' ? pfx('y', 'Y', d.y, lk) : '<span></span>')}
+        ${d.media ? pfx('w', 'Š', d.w, 'title="Šířka ve světě"' + lk) : pfx('ph.w', 'Š', d.placeholder.w, lk)}
+        ${pfx('rotation', '∠', d.rotation || 0, 'title="Natočení ve stupních"' + lk)}
       </div>
+      <div class="row"><button class="btn" data-act="lock" aria-pressed="${!!d.locked}" title="Zamknout polohu – nepohne se myší ani šipkami (L)">${d.locked ? 'Zamčeno · odemknout' : 'Zamknout polohu'}</button>${d.media ? `<button class="btn" data-act="flip" aria-pressed="${!!d.flip}" title="Zrcadlit vodorovně (H)">↔ Zrcadlit${d.flip ? ' · zrcadleno' : ''}</button>` : ''}</div>
       <div class="stack"><span class="label">Vrstva${d.z ? ` · ${d.z}` : ''}</span><div class="row fill"><button class="btn" data-act="z-">Dozadu</button><button class="btn" data-act="z+">Dopředu</button></div></div>${plaqueBlock}`;
   } else if (tab === 'vzhled') {
     body = `<div class="stack"><span class="label">Obrázek</span>
@@ -691,6 +717,8 @@ async function onInspClick(e) {
   if (act === 'opening') return openOpening(item(primary));
   if (act === 'shelves') return openShelves(item(primary).media);
   if (act === 'pq-reset') return commit('plaque', () => { for (const id of sel) { const d = item(id); if (d) delete d.plaqueAt; } });
+  if (act === 'flip') return flipSelected();
+  if (act === 'lock') return lockSelected();
   if (act === 'z+' || act === 'z-') return commit('z', () => { for (const id of sel) { const d = item(id); if (d) { d.z = (d.z || 0) + (act === 'z+' ? 1 : -1); if (!d.z) delete d.z; } } });
   if (act === 'swap') {
     const d = item(primary);

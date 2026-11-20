@@ -1194,14 +1194,65 @@
       "bytes": 86130,
       "v": 2,
       "addedAt": "2026-11-20T10:25:58.236Z"
+    },
+    "bd79c9f1933b": {
+      "kind": "item",
+      "name": "Antique Book Stack with Gilded Spines.png",
+      "w": 1600,
+      "h": 856,
+      "alpha": true,
+      "widths": [
+        640,
+        1280,
+        1600
+      ],
+      "look": null,
+      "color": "#553b28",
+      "bytes": 1233070,
+      "v": 1,
+      "addedAt": "2026-11-20T18:37:06.011Z"
+    },
+    "e2eb3e305bcc": {
+      "kind": "item",
+      "name": "Antique Botanical Book Stack Cutout.png",
+      "w": 1536,
+      "h": 784,
+      "alpha": true,
+      "widths": [
+        640,
+        1280,
+        1536
+      ],
+      "look": null,
+      "color": "#54402d",
+      "bytes": 772980,
+      "v": 1,
+      "addedAt": "2026-11-20T18:37:07.053Z"
+    },
+    "b066133823b8": {
+      "kind": "item",
+      "name": "Stack of Antique Leather Books.png",
+      "w": 1600,
+      "h": 810,
+      "alpha": true,
+      "widths": [
+        640,
+        1280,
+        1600
+      ],
+      "look": null,
+      "color": "#483426",
+      "bytes": 772262,
+      "v": 1,
+      "addedAt": "2026-11-20T18:37:09.046Z"
     }
   },
   "items": [
     {
       "id": "candle-2",
       "media": "5e857f37a13c",
-      "x": -636.74,
-      "y": 793.3,
+      "x": -627.92,
+      "y": 813.73,
       "w": 96,
       "rotation": 0
     },
@@ -1310,8 +1361,8 @@
     {
       "id": "mapa-sveta",
       "media": "2590e11524f1",
-      "x": 1490.75,
-      "y": 86.19,
+      "x": 1491.13,
+      "y": 96.92,
       "w": 400,
       "rotation": 1.4,
       "plaqueAt": {
@@ -1339,8 +1390,8 @@
     {
       "id": "mapa-amerika",
       "media": "767c78e2f549",
-      "x": -1198.91,
-      "y": 1385.53,
+      "x": -1215.3,
+      "y": 1385.96,
       "w": 323.5,
       "rotation": -0.2,
       "plaqueAt": {
@@ -1518,10 +1569,10 @@
     {
       "id": "list1",
       "media": "579c66ad1b63",
-      "x": 774.66,
-      "y": 1463.38,
+      "x": 850.51,
+      "y": 1452.18,
       "w": 157.98,
-      "rotation": 0,
+      "rotation": 8.1,
       "opening": {
         "shape": "rect",
         "x": 0.15,
@@ -1544,15 +1595,6 @@
         "w": 0.73,
         "h": 0.79
       }
-    },
-    {
-      "id": "antique-leather-books-on-black-backgroun",
-      "media": "67ce4e1fdb6d",
-      "x": -694.81,
-      "y": 1000.03,
-      "w": 280.77,
-      "rotation": 0,
-      "on": "cabinet"
     },
     {
       "id": "vintage-letters-with-wax-seal-background",
@@ -1578,21 +1620,22 @@
       "y": 902.19,
       "w": 963.43,
       "rotation": 0,
-      "z": 1
+      "z": 1,
+      "locked": true
     },
     {
       "id": "monstrum1-2",
       "media": "5bf40b8694f0",
-      "x": -895.8,
-      "y": 1410.11,
+      "x": -977.73,
+      "y": 1411.65,
       "w": 261.17,
       "rotation": -7.5
     },
     {
       "id": "svicen-polozeny",
       "media": "5e857f37a13c",
-      "x": 990.87,
-      "y": 133.26,
+      "x": 997.7,
+      "y": 136.33,
       "w": 87.46,
       "rotation": 0,
       "z": -4
@@ -1665,6 +1708,7 @@
       "y": 902.17,
       "w": 238.56,
       "rotation": 0,
+      "locked": true,
       "plaqueAt": {
         "dx": 115.5,
         "dy": 307.1
@@ -1688,6 +1732,8 @@
       "y": 969.82,
       "w": 140.35,
       "rotation": 0,
+      "locked": true,
+      "flip": true,
       "plaqueAt": {
         "dx": 99.4,
         "dy": 168.6
@@ -1711,6 +1757,7 @@
       "y": 859.05,
       "w": 369.99,
       "rotation": 0,
+      "locked": true,
       "plaqueAt": {
         "dx": 158.7,
         "dy": 443.8
@@ -1810,8 +1857,8 @@
     {
       "id": "dscf2840",
       "media": "26cc9bebcf7b",
-      "x": -242.4,
-      "y": 134.6,
+      "x": -243.96,
+      "y": 124.04,
       "w": 375.92,
       "rotation": 0,
       "plaqueAt": {
@@ -1843,6 +1890,7 @@
       "y": 4.23,
       "w": 400,
       "rotation": 0,
+      "locked": true,
       "plaqueAt": {
         "dx": 8.8,
         "dy": -4
@@ -1905,8 +1953,8 @@
     {
       "id": "tabule",
       "media": "f5907fc1bc41",
-      "x": -1016.01,
-      "y": 706.85,
+      "x": -1039.58,
+      "y": 648.1,
       "w": 213.27,
       "rotation": 0.8,
       "opens": "notices",
@@ -1917,6 +1965,50 @@
         "w": 0.7376,
         "h": 0.7946
       }
+    },
+    {
+      "id": "stack-of-antique-leather-books",
+      "media": "b066133823b8",
+      "x": -680.12,
+      "y": 989.67,
+      "w": 273.36,
+      "rotation": 0,
+      "on": "cabinet"
+    },
+    {
+      "id": "antique-book-stack-with-gilded-spines",
+      "media": "bd79c9f1933b",
+      "x": -806.67,
+      "y": 1479.99,
+      "w": 279.99,
+      "rotation": 0,
+      "flip": true
+    },
+    {
+      "id": "antique-botanical-book-stack-cutout",
+      "media": "e2eb3e305bcc",
+      "x": -780.55,
+      "y": 1341.46,
+      "w": 249.33,
+      "rotation": 0,
+      "flip": true
+    },
+    {
+      "id": "stack-of-antique-leather-books-2",
+      "media": "b066133823b8",
+      "x": 1259.84,
+      "y": 179.51,
+      "w": 253.79,
+      "rotation": 0
+    },
+    {
+      "id": "stack-of-antique-leather-books-3",
+      "media": "b066133823b8",
+      "x": 791.57,
+      "y": 1517.47,
+      "w": 287.75,
+      "rotation": 0,
+      "flip": true
     }
   ],
   "handCandle": {

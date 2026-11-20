@@ -61,9 +61,9 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 .drawer.open{z-index:2;transition:none}
 .tray{position:absolute;inset:0;background:#1a1009;box-shadow:inset 0 0 0 7px #3b2412,inset 0 16px 20px rgba(0,0,0,.9);overflow:hidden}
 .tray::before{content:"";position:absolute;inset:7px 7px 0;background:radial-gradient(ellipse 70% 80% at 50% 30%,#2f4c37,#142219);box-shadow:inset 0 14px 18px rgba(0,0,0,.75)}
-.tray .item{position:absolute;display:block;max-width:none;transform:rotate(var(--tilt,0deg))}
+.tray .item{position:absolute;display:block;max-width:none;transform:rotate(var(--tilt,0deg)) scaleX(var(--flip,1))}
 .tray .item.work{cursor:pointer;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-.tray .item.work:hover,.tray .item.work:focus-visible{transform:translateY(-4px) rotate(var(--tilt,0deg))}
+.tray .item.work:hover,.tray .item.work:focus-visible{transform:translateY(-4px) rotate(var(--tilt,0deg)) scaleX(var(--flip,1))}
 .tray .item.work:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 .tray .tag{position:absolute;font-family:var(--f-label);font-size:12px;letter-spacing:.06em;color:#2a2117;background:#e9dcbb;padding:2px 7px 3px;transform:rotate(-4deg);box-shadow:1px 2px 3px rgba(0,0,0,.5);white-space:nowrap;pointer-events:none}
 .tray .tag b{font-weight:400;color:#8a2a1e;margin-left:.3em}
@@ -72,9 +72,9 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 .front:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .front svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);overflow:visible}
 .drawer.open .front{transform:translateY(76%) scale(1.03);box-shadow:inset 0 0 0 2px rgba(0,0,0,.4),0 22px 28px rgba(0,0,0,.65)}
-.cab-obj{position:absolute;display:block;max-width:none;transform:rotate(var(--tilt,0deg))}
+.cab-obj{position:absolute;display:block;max-width:none;transform:rotate(var(--tilt,0deg)) scaleX(var(--flip,1))}
 .cab-obj.work{cursor:pointer;transition:transform .35s cubic-bezier(.2,.7,.2,1);outline:none}
-.cab-obj.work:hover,.cab-obj.work:focus-visible{transform:translateY(-6px) rotate(var(--tilt,0deg))}
+.cab-obj.work:hover,.cab-obj.work:focus-visible{transform:translateY(-6px) rotate(var(--tilt,0deg)) scaleX(var(--flip,1))}
 .cab-obj.work:focus-visible{outline:2px solid var(--ink);outline-offset:6px}
 .cabinet .plaque{top:4px;transform:translateX(-50%);font-size:calc(var(--pq-size,14px) - 1px);padding:3px 12px 4px}
 .frame.work{cursor:pointer}
@@ -218,10 +218,10 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 }
 
 /* ---------- real images (PLAN phase 2) ---------- */
-.piece{display:block;max-width:none;transform:rotate(var(--tilt));transition:transform .35s cubic-bezier(.2,.7,.2,1);outline:none}
+.piece{display:block;max-width:none;transform:rotate(var(--tilt)) scaleX(var(--flip,1));transition:transform .35s cubic-bezier(.2,.7,.2,1);outline:none}
 /* exhibits and the notices board (.opens) lift under the pointer and open on a click */
 .piece.work,.piece.opens{cursor:pointer}
-.piece.work:hover,.piece.work:focus-visible,.piece.opens:hover,.piece.opens:focus-visible{transform:translateY(-5px) rotate(var(--tilt))}
+.piece.work:hover,.piece.work:focus-visible,.piece.opens:hover,.piece.opens:focus-visible{transform:translateY(-5px) rotate(var(--tilt)) scaleX(var(--flip,1))}
 .piece.work:focus-visible,.piece.opens:focus-visible{outline:2px solid var(--ink);outline-offset:10px}
 body.dragging .piece.work,body.dragging .piece.opens{pointer-events:none}
 .grime{position:absolute;display:block;max-width:none;pointer-events:none;object-fit:cover}
