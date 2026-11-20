@@ -3,7 +3,7 @@
 // Text edits save themselves (debounce/blur) and are not part of the wall's undo history.
 
 import { $, $$, esc, store, on, commit, api, status, item, where, mediaSrc, itemName, inv, uniqueSlug, nextInv,
-  missing, pickMedia, stopPointer } from './core.js';
+  missing, pickMedia, stopPointer, usage, refresh } from './core.js';
 
 const root = () => $('#sec-exponaty');
 let current = null;            // slug of the open exhibit
@@ -43,6 +43,43 @@ function renderList() {
     <div class="ex-rows">${rows}</div>`;
 }
 
+// ---------- the exhibit's own picture (the one on the wall) ----------
+// The two ways it already changes elsewhere, here next to the texts: „Zaměnit“ = another library image for
+// this exhibit (Stěna's swap: the width on the wall stays, the height follows the new proportions, the frame
+// opening is dropped – it belonged to the old picture); „Nahradit soubor“ = a new version of the same image
+// (Knihovna's replace: same id, so it changes everywhere it is used).
+function mainImageBlock(d) {
+  const m = d.media && D().media[d.media], uses = d.media ? usage(d.media).length : 0;
+  return `<div class="stack" style="gap:10px">
+    <h2 style="margin:0;font-size:15px;font-weight:600">Obrázek na stěně</h2>
+    <div class="media-pick"><span class="thumb checker ck">${m ? `<img src="${mediaSrc(d.media)}" alt="">` : ''}</span>
+      <span class="tx"><b>${m ? esc(m.name) : 'zástupný obrázek'}</b><span class="hint">${m ? `${m.w} × ${m.h} px · na stěně ${Math.round(d.w || 0)} px široký${uses > 1 ? ` · použitý ${uses}×` : ''}` : 'malovaný – vyber skutečný obrázek'}</span></span>
+      <button class="btn" data-act="swap-img">Zaměnit za jiný z knihovny…</button>
+      ${m ? '<label class="btn">Nahradit soubor…<input type="file" accept=".jpg,.jpeg,.png,.webp,.tif,.tiff" data-replace-main hidden></label>' : ''}</div>
+    <p class="hint">Zaměnit = jiný obrázek z Knihovny pro tenhle exponát (šířka na stěně zůstane, výška se přizpůsobí). Nahradit soubor = nová verze téhož obrázku – změní se všude, kde je použitý. Bez fotek v galerii ukazuje web tenhle obrázek i v detailu.</p>
+  </div>`;
+}
+async function swapImage() {
+  const d = bySlug(current); if (!d) return;
+  const id = await pickMedia({ title: 'Zaměnit obrázek exponátu', kinds: ['item'], current: d.media });
+  if (!id || id === d.media) return;
+  commit('swap', () => {
+    if (!d.media) { d.w = d.placeholder?.w || 300; delete d.placeholder; }
+    d.media = id; delete d.opening;
+  });
+  status('ok', 'Obrázek zaměněn'); renderList(); renderDoc();
+}
+async function replaceImage(f) {
+  const d = bySlug(current); if (!d?.media || !f) return;
+  const uses = usage(d.media).length;
+  if (uses > 1 && !confirm(`Tenhle obrázek je použitý ${uses}× (${usage(d.media).map(u => u[0]).join(', ')}). Nový soubor se ukáže všude. Pokračovat?`)) return;
+  try {
+    status('saving', 'Nahrazuji soubor…');
+    const r = await api('POST', `/api/media/${d.media}/replace?name=${encodeURIComponent(f.name)}`, undefined, f);
+    await refresh(); status('ok', r.warning || 'Soubor nahrazen');
+  } catch (err) { status('err', err.message); }
+}
+
 // ---------- the document ----------
 function renderDoc() {
   const doc = $('.ex-doc', root());
@@ -77,6 +114,7 @@ function renderDoc() {
           <input id="tag-in" placeholder="přidat štítek…" aria-label="Přidat štítek"></div></div>
       <label class="check"><input type="checkbox" data-k="plaque"${ex.plaque !== false ? ' checked' : ''}> Mosazný štítek s číslem pod věcí na stěně</label>
     </div>
+    ${mainImageBlock(d)}
     <div class="stack" style="gap:12px">
       <div class="row" style="justify-content:space-between"><h2 style="margin:0;font-size:15px;font-weight:600">Galerie <span class="hint" style="font-size:13px;font-weight:400">· ${(ex.gallery || []).length} ${plural((ex.gallery || []).length)} · přetažením změníš pořadí, první je obálka</span></h2>
         <button class="btn" data-act="pick">Vybrat z knihovny</button></div>
@@ -125,6 +163,7 @@ function onChange(e) {
   const k = e.target.dataset.k, cap = e.target.dataset.cap;
   if (cap) return save('caption', ex => { const v = e.target.value.trim(); ex.captions = { ...(ex.captions || {}) }; if (v) ex.captions[cap] = v; else delete ex.captions[cap]; });
   if (e.target.matches('[data-upload]')) { const files = [...e.target.files]; e.target.value = ''; return upload(files); }
+  if (e.target.matches('[data-replace-main]')) { const f = e.target.files[0]; e.target.value = ''; return replaceImage(f); }
   if (!k) return;
   const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
   if (k === 'inv') {
@@ -176,6 +215,7 @@ async function onClick(e) {
     void d;
   }
   if (act === 'make') makeExhibit();
+  if (act === 'swap-img') swapImage();
   if (act === 'rehang') rehang();
   if (act === 'purge') purge();
 }
