@@ -58,11 +58,13 @@ async function onClick(e) {
     if (act === 'new') {
       status('saving');
       const r = await api('POST', '/api/notices', { date: today(), text: '' });
-      focusId = r.notice.id; await refresh(); status('ok', 'Nový zápis');
+      // render ourselves: the 'data' listener skips while focus is in this section – and the clicked
+      // button is in it, so a new entry never appeared until a reload (Martin, 2026-11-20)
+      focusId = r.notice.id; await refresh(); render(); status('ok', 'Nový zápis');
     }
     if (act === 'del') { confirmDel = id; return render(); }
     if (act === 'del-no') { confirmDel = null; return render(); }
-    if (act === 'del-yes') { confirmDel = null; status('saving'); await api('DELETE', `/api/notices/${id}`); await refresh(); status('ok', 'Zápis smazán'); }
+    if (act === 'del-yes') { confirmDel = null; status('saving'); await api('DELETE', `/api/notices/${id}`); await refresh(); render(); status('ok', 'Zápis smazán'); }
     // the board off the wall and back: the same stored-off mechanism as for exhibits (it keeps its place)
     if (act === 'off') { commit('board-off', Dd => { const b = Dd.items.find(i => i.opens === 'notices'); if (b) { b.off = true; delete b.sits; } }); render(); status('ok', 'Tabule je mimo stěnu'); }
     if (act === 'hang') { commit('board-hang', Dd => { const b = Dd.items.find(i => i.opens === 'notices'); if (b) delete b.off; }); render(); status('ok', 'Tabule visí zpátky na svém místě'); }
@@ -81,7 +83,7 @@ async function onChange(e) {
   if (t.matches('.nt-text')) { const id = t.closest('.nt-entry').dataset.id; clearTimeout(timers.get(id)); timers.delete(id); await saveText(id, t.value); return; }   // no re-render: the click that blurred it may be into the next field
   if (t.matches('.nt-date')) {
     const id = t.closest('.nt-entry').dataset.id;
-    try { status('saving'); await api('PATCH', `/api/notices/${id}`, { date: t.value }); await refresh(); status('ok'); }
+    try { status('saving'); await api('PATCH', `/api/notices/${id}`, { date: t.value }); await refresh(); render(); status('ok'); }
     catch (err) { status('err', err.message); render(); }
   }
 }
