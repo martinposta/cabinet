@@ -2,7 +2,7 @@
 // (main.js decides; on a phone mobile.js shows the exhibits as a list instead.)
 
 import { buildWall } from './wall.js';
-import { mediaUrl } from './media.js';
+import { mediaUrl, holdUpgrades, releaseUpgrades } from './media.js';
 import { startCamera } from './camera.js';
 import { exhibitRouter } from './routing.js';
 import { openNotices } from './notices.js';
@@ -20,6 +20,7 @@ export async function startWallPage(data) {
     im.src = mediaUrl(tileId, tile, tile.widths[tile.widths.length - 1]);
   }
   const world = document.getElementById("world");
+  holdUpgrades();   // previews first, then the full files from the middle of the view outwards (media.js)
   const wall = buildWall(world, data);
   Promise.race([document.fonts.ready, new Promise(res => setTimeout(res, 1800))]).then(wall.paintAll);
 
@@ -50,6 +51,9 @@ export async function startWallPage(data) {
     ...(fx.castShadows ? { shadows: shadows.draw } : {}),
     ...(fx.frameLips ? { dark: shadows.lips } : {}),
   } });
+  // the camera has placed the default view by the next frame, so "nearest the middle" means what is seen;
+  // the timer covers a tab opened in the background, where frames do not run and the full files would wait
+  new Promise(r => { requestAnimationFrame(r); setTimeout(r, 150); }).then(releaseUpgrades);
   // ?perf exposes the per-frame work for measuring it in the console (nothing else reads it)
   if (new URLSearchParams(location.search).has("perf")) window.__kabinet = { shadows, camera };
   const router = exhibitRouter({ data, ui, exhibits: wall.exhibits, onClose: () => camera.invalidate() });

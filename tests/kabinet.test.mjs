@@ -214,6 +214,11 @@ test('items: hang a real image, used media cannot be deleted, data.json carries 
   const pub = await (await fetch(BASE + '/preview/data.json')).json();
   assert.equal(pub.items[0].media, itemId);
   assert.equal(pub.media[itemId].kind, 'item');
+  // quick previews: a third of each derivative, alpha kept, no metadata; the site learns them as `pv`
+  assert.deepEqual(pub.media[itemId].pv, { 640: 213, 900: 300 });
+  const pm = await sharp(path.join(tmp, 'docs', 'media', itemId, 'p300.webp')).metadata();
+  assert.equal(pm.width, 300); assert.equal(pm.hasAlpha, true); assert.equal(pm.exif, undefined);
+  assert.equal(pub.media[tileId].pv, undefined, 'a wallpaper tile gets no preview');
   assert.equal(pub.wall.wallpaper, tileId);
   assert.equal((await call('DELETE', `/api/items/${id}`)).status, 200);
   assert.equal((await call('DELETE', `/api/media/${itemId}`)).status, 200);
