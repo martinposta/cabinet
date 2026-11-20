@@ -60,6 +60,13 @@
     "corniceH": 120,
     "wainscotH": 420
   },
+  "notices": [
+    {
+      "id": "4807b47251",
+      "date": "2026-11-19",
+      "text": "We welcome our first visitors to the Cabinet of Curiosities. Visitors, please be careful. The exhibition is still being set up, and we don't want any unfortunate accidents, especially with some of the things lying around here.\n\nThank you for your patience, The Curator"
+    }
+  ],
   "room": {
     "x0": -1610.81,
     "x1": 1934.47,
@@ -79,6 +86,11 @@
       "y": 0.2313,
       "w": 0.6,
       "h": 0.7687
+    },
+    "noticesAt": {
+      "x": 1.2167,
+      "y": 0.4619,
+      "h": 0.25
     }
   },
   "wall": {
@@ -1152,6 +1164,36 @@
       "bytes": 647850,
       "v": 1,
       "addedAt": "2026-11-19T17:14:03.998Z"
+    },
+    "f5907fc1bc41": {
+      "kind": "item",
+      "name": "tabule.png",
+      "w": 470,
+      "h": 662,
+      "alpha": true,
+      "widths": [
+        470
+      ],
+      "look": null,
+      "color": "#312924",
+      "bytes": 63224,
+      "v": 2,
+      "addedAt": "2026-11-20T01:41:54.328Z"
+    },
+    "3a81eabd05ce": {
+      "kind": "board",
+      "name": "tabuledetail.png",
+      "w": 1200,
+      "h": 1317,
+      "alpha": true,
+      "widths": [
+        1200
+      ],
+      "look": null,
+      "color": "#2c2723",
+      "bytes": 86130,
+      "v": 2,
+      "addedAt": "2026-11-20T10:25:58.236Z"
     }
   },
   "items": [
@@ -1332,7 +1374,7 @@
       "rotation": 0,
       "plaqueAt": {
         "dx": 18.1,
-        "dy": 1.4
+        "dy": -2.7
       },
       "exhibit": {
         "slug": "certificate",
@@ -1607,8 +1649,8 @@
       "w": 240.71,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 171.4,
-        "dy": 180.1
+        "dx": 100.9,
+        "dy": 178.5
       },
       "exhibit": {
         "slug": "skulloflarsmoller",
@@ -1632,8 +1674,8 @@
       "w": 238.56,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 124.9,
-        "dy": 313.2
+        "dx": 115.5,
+        "dy": 307.1
       },
       "on": "cabinet",
       "exhibit": {
@@ -1655,8 +1697,8 @@
       "w": 140.35,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 121.7,
-        "dy": 179.9
+        "dx": 99.4,
+        "dy": 168.6
       },
       "on": "cabinet",
       "exhibit": {
@@ -1678,8 +1720,8 @@
       "w": 369.99,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 176.6,
-        "dy": 449.7
+        "dx": 158.7,
+        "dy": 443.8
       },
       "on": "cabinet",
       "exhibit": {
@@ -1810,8 +1852,8 @@
       "w": 400,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 8.1,
-        "dy": -0.9
+        "dx": 8.8,
+        "dy": -4
       },
       "exhibit": {
         "slug": "twofaces",
@@ -1867,6 +1909,22 @@
       "y": 796.22,
       "w": 400,
       "rotation": 0
+    },
+    {
+      "id": "tabule",
+      "media": "f5907fc1bc41",
+      "x": -1016.01,
+      "y": 706.85,
+      "w": 213.27,
+      "rotation": 0.8,
+      "opens": "notices",
+      "opening": {
+        "shape": "rect",
+        "x": 0.1322,
+        "y": 0.1036,
+        "w": 0.7376,
+        "h": 0.7946
+      }
     }
   ],
   "handCandle": {
@@ -1874,5 +1932,14 @@
     "fx": 0.5,
     "fy": 0.15,
     "height": 118
+  },
+  "noticesBoard": {
+    "media": "3a81eabd05ce",
+    "area": {
+      "x": 0.1159,
+      "y": 0.1056,
+      "w": 0.7683,
+      "h": 0.7889
+    }
   }
 }

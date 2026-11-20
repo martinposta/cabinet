@@ -5,6 +5,7 @@ import { buildWall } from './wall.js';
 import { mediaUrl } from './media.js';
 import { startCamera } from './camera.js';
 import { exhibitRouter } from './routing.js';
+import { openNotices } from './notices.js';
 import { createShadows, addStaticShadows } from './shadows.js';
 import { handCandle, candleFromData } from './cursor.js';
 
@@ -63,6 +64,19 @@ export async function startWallPage(data) {
     it.el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openExhibit(it, true); } });
     it.el.addEventListener("focus", () => { if (!it.el.matches(":focus-visible")) return; camera.focusOn(...worldPos(it)); });
   });
+
+  // the notices board (an item with opens: "notices"): opens the chalk timeline over the wall
+  const board = wall.board;
+  if (board) {
+    // the camera ignores wheel, keys and drags while it is open, as for the exhibit viewer
+    // the board's own picture close up, when one is set (admin → Aktuality)
+    const nb = data.noticesBoard, nbm = nb?.media && data.media?.[nb.media];
+    const look = nbm ? { src: new URL(mediaUrl(nb.media, nbm, nbm.widths[nbm.widths.length - 1]), document.baseURI).href, ar: nbm.w / nbm.h, area: nb.area || null } : null;
+    const open = e => { e.stopPropagation(); ui.viewerOpen = true; openNotices(data.notices || [], { look, onClose: () => { ui.viewerOpen = false; camera.invalidate(); } }); };
+    board.el.addEventListener("click", open);
+    board.el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(e); } });
+    board.el.addEventListener("focus", () => { if (board.el.matches(":focus-visible")) camera.focusOn(board.x, board.y); });
+  }
 
   // an exhibit page (e/<slug>/) opens straight into its exhibit, the wall behind it already in place
   const start = router.start;

@@ -19,6 +19,7 @@
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/notices.css?v=49ef470648">
 <!-- network only, nothing is decoded here: the wall must not make the doors page feel frozen (D14) -->
 <link rel="prefetch" href="cabinet/">
 <link rel="prefetch" href="data.json">
@@ -34,11 +35,24 @@ body{display:grid;place-items:center;font-family:"IM Fell English SC","Iowan Old
 .doors img,.doors svg{display:block;max-width:min(92vw,1100px);max-height:calc(100vh - 32px);width:auto;height:auto}
 .doors svg{width:min(92vw,calc((100vh - 32px) * .78));height:auto}
 .dark{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+/* the room's wallpaper around the doors (phase 8b): a static background – this page neither pans nor zooms –
+   and the room's grime over it when there is one; the scene, the darkness and the candle stay on top */
+body{background-repeat:repeat;background-position:center top}
+.grime{position:fixed;inset:0;pointer-events:none;background-position:center;background-size:cover;background-repeat:no-repeat}
+/* no z-index on .scene: the grime is earlier in the page, so it already sits under the doors, and the
+   darkness (later, also positioned) must keep covering them */
 /* the casing around the doors (admin → Místnost → Úvodní dveře): one picture with a see-through opening;
    the doors fill the opening drawn on it and the casing is laid over their edges */
 .portal{position:relative;width:min(92vw,1400px,calc((100vh - 32px) * var(--ar)));aspect-ratio:var(--ar)}
 .portal .doors{position:absolute;left:var(--ox);top:var(--oy);width:var(--ow);height:var(--oh);border-radius:0}
 .portal .doors img,.portal .doors svg{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+/* the box the doors (or the casing) make; the notices board beside them is placed in its fractions */
+.entry{position:relative;line-height:0}
+.nb-doors{position:absolute;transform:translate(-50%,-50%);padding:0;border:0;background:none;cursor:pointer;line-height:0;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.nb-doors img{display:block;height:100%;width:auto;max-width:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6))}
+.nb-doors:hover,.nb-doors:focus-visible{transform:translate(-50%,calc(-50% - 5px))}
+.nb-doors:focus-visible{outline:2px solid var(--gilt-hi);outline-offset:6px}
+@media (max-width:760px){.nb-doors{display:none}}
 .portal .casing{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
 @media (hover:none){.dark{display:none}}
 /* the hand candle, as on the wall (js/cursor.js) */
@@ -47,13 +61,13 @@ html body.candle-cursor,html body.candle-cursor *{cursor:none!important}
 .hand-candle[hidden]{display:none}
 </style>
 </head>
-<body>
+<body style="background-image:url(&quot;media/c7d45bf977b9/691.webp?v=2&quot;);background-size:500px auto">
 <main class="scene">
-  <div class="portal" style="--ar:1500/2183;--ox:20.000%;--oy:23.130%;--ow:60.000%;--oh:76.870%"><button class="doors" id="doors" type="button" aria-label="Enter the cabinet"><img src="media/73039ad6bde6/751.webp?v=1" srcset="media/73039ad6bde6/751.webp?v=1 751w" sizes="(max-width:1200px) 92vw, 1100px" width="751" height="1400" alt="Closed cabinet doors"></button><img class="casing" src="media/9aaeffdcab18/1500.webp?v=2" srcset="media/9aaeffdcab18/1500.webp?v=2 1500w" sizes="(max-width:1400px) 92vw, 1400px" width="1500" height="2183" alt=""></div>
+  <div class="entry"><div class="portal" style="--ar:1500/2183;--ox:20.000%;--oy:23.130%;--ow:60.000%;--oh:76.870%"><button class="doors" id="doors" type="button" aria-label="Enter the cabinet"><img src="media/73039ad6bde6/751.webp?v=1" srcset="media/73039ad6bde6/751.webp?v=1 751w" sizes="(max-width:1200px) 92vw, 1100px" width="751" height="1400" alt="Closed cabinet doors"></button><img class="casing" src="media/9aaeffdcab18/1500.webp?v=2" srcset="media/9aaeffdcab18/1500.webp?v=2 1500w" sizes="(max-width:1400px) 92vw, 1400px" width="1500" height="2183" alt=""></div><button class="nb-doors" id="nbDoors" type="button" aria-label="Notices board. Open the notices" style="left:121.670%;top:46.190%;height:25.000%"><img src="media/f5907fc1bc41/470.webp?v=2" srcset="media/f5907fc1bc41/470.webp?v=2 470w" sizes="320px" width="470" height="662" alt=""></button></div>
 </main>
 <canvas class="dark" aria-hidden="true"></canvas>
-<script>window.DOORS={"ajar":"media/4c2a60b1f079/751.webp?v=1","sound":null,"candle":{"src":"media/dc6269d0e651/162.webp?v=2","h":118,"w":43,"fx":0.5,"fy":0.15,"cursor":{"w":43,"h":118,"x1":"media/dc6269d0e651/cursor-118-v2-1x.png","x2":"media/dc6269d0e651/cursor-118-v2-2x.png"}},"dark":true};</script>
-<script type="module" src="js/doors.js?v=e09b782bd0"></script>
+<script>window.DOORS={"ajar":"media/4c2a60b1f079/751.webp?v=1","sound":null,"candle":{"src":"media/dc6269d0e651/162.webp?v=2","h":118,"w":43,"fx":0.5,"fy":0.15,"cursor":{"w":43,"h":118,"x1":"media/dc6269d0e651/cursor-118-v2-1x.png","x2":"media/dc6269d0e651/cursor-118-v2-2x.png"}},"dark":true,"notices":[{"id":"4807b47251","date":"2026-11-19","text":"We welcome our first visitors to the Cabinet of Curiosities. Visitors, please be careful. The exhibition is still being set up, and we don't want any unfortunate accidents, especially with some of the things lying around here.\n\nThank you for your patience, The Curator"}],"noticesLook":{"src":"media/3a81eabd05ce/1200.webp?v=2","ar":0.9112,"area":{"x":0.1159,"y":0.1056,"w":0.7683,"h":0.7889}}};</script>
+<script type="module" src="js/doors.js?v=49ef470648"></script>
 
 </body>
 </html>
