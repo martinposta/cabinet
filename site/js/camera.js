@@ -58,6 +58,8 @@ export function startCamera({ world, WALL: wall0, BOUNDS, PLATE, centre, START, 
       tileW=(t.naturalWidth||t.width)*s; tileH=(t.naturalHeight||t.height)*s;
       wall.style.backgroundImage=`url("${t instanceof HTMLImageElement?t.src:t.toDataURL()}")`;
       wallZ=-1;
+      // fade in from the black page, a frame later so the transition starts from opacity 0
+      requestAnimationFrame(()=>wall.classList.add("tiled"));
     }
     if(!tileW) return;
     // The tile is rastered at zoom wallZ and the element is SCALED to the current zoom, so a zoom does not

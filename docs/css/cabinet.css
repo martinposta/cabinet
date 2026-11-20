@@ -13,7 +13,7 @@
 /* Cabinet of Curiosities: an endless flocked-green wall, click-and-drag pan, wheel zoom toward the cursor,
    no camera easing. Single deliberate dark look. Layout comes from data.json (placed by hand). */
 :root{
-  --wall:#163126;
+  --wall:#050806;   /* black until the wallpaper fades in (the mock-up's green flashed on every load) */
   --wall-deep:#0a1a12;
   --flock:rgba(132,182,140,.10);
   --gilt:#c9a24a;
@@ -32,7 +32,8 @@
 html,body{height:100%;margin:0;overflow:hidden}
 body{background:var(--wall);color:var(--ink);font-family:var(--f-body);touch-action:none;-webkit-font-smoothing:antialiased}
 
-#wall{position:fixed;left:0;top:0;display:block;background-color:var(--wall);background-repeat:repeat;will-change:transform}
+#wall{position:fixed;left:0;top:0;display:block;background-repeat:repeat;will-change:transform;opacity:0;transition:opacity .9s ease}
+#wall.tiled{opacity:1}   /* the tile is in and decoded: the wallpaper fades in over the black (camera.js) */
 #world{position:fixed;left:0;top:0;transform-origin:0 0;will-change:transform;contain:layout style}
 .vignette{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 78% at 50% 50%,transparent 38%,rgba(0,0,0,.55) 72%,#000 100%)}
 .glow{position:fixed;left:0;top:0;width:900px;height:900px;margin:-450px 0 0 -450px;pointer-events:none;will-change:transform,opacity;background:radial-gradient(circle closest-side,rgba(255,176,84,.20),rgba(255,160,70,.08) 45%,transparent)}

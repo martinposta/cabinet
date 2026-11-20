@@ -16,7 +16,9 @@ export async function startWallPage(data) {
   const tileId = data.wall?.wallpaper, tile = tileId && data.media?.[tileId];
   if (tile) {
     const im = new Image();
-    im.onload = () => { window.__wallTile = im; window.__wallTileScale = (data.wall.tileWorld || 280) / im.naturalWidth; window.__wallDirty = true; };
+    // decoded before it is handed over, so the fade-in starts from a finished tile, not a half-painted one
+    // (decode() never settles in a tab that is not being rendered, hence the short limit)
+    im.onload = () => Promise.race([im.decode().catch(() => {}), new Promise(r => setTimeout(r, 400))]).then(() => { window.__wallTile = im; window.__wallTileScale = (data.wall.tileWorld || 280) / im.naturalWidth; window.__wallDirty = true; });
     im.src = mediaUrl(tileId, tile, tile.widths[tile.widths.length - 1]);
   }
   const world = document.getElementById("world");
