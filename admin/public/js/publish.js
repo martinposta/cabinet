@@ -23,6 +23,8 @@ function changesHtml(c) {
   if (m.added || m.removed || m.replaced) parts.push(li(`Knihovna: ${[m.added && `${m.added} nových obrázků`, m.removed && `${m.removed} odebraných`, m.replaced && `${m.replaced} nahrazených`].filter(Boolean).join(', ')}`));
   for (const s of c.settings) parts.push(li(s.from === undefined ? `Nastavení: ${esc(s.label)}` : `Nastavení – ${esc(s.label)}: ${esc(s.from || '—')} → ${esc(s.to || '—')}`));
   if (c.rooms.length) parts.push(li(`Místnost: ${c.rooms.map(esc).join(', ')}`));
+  const n = c.notices || {};
+  if (n.added || n.removed || n.edited) parts.push(li(`Aktuality: ${[n.added && `${n.added} nových zápisů`, n.edited && `${n.edited} upravených`, n.removed && `${n.removed} smazaných`].filter(Boolean).join(', ')}`));
   const out = parts.filter(Boolean);
   return out.length ? `<ul class="pub-list">${out.join('')}</ul>` : '<p class="hint">Na obsahu webu se oproti GitHubu nic nemění.</p>';
 }

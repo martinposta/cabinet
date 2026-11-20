@@ -467,15 +467,16 @@ function removeSelected() {
   if (!ids.length) return;
   // an exhibit goes to storage with its texts and gallery (Exponáty → Mimo stěnu); a decoration has
   // nothing to lose – its picture stays in the library – so it is simply removed
-  const stored = ids.filter(id => item(id)?.exhibit).length;
+  // the notices board too: off the wall it keeps its settings and is hung back from Aktuality
+  const stored = ids.filter(id => item(id)?.exhibit).length, board = ids.some(id => item(id)?.opens);
   commit('delete', D => {
-    D.items = D.items.filter(i => !ids.includes(i.id) || i.exhibit);
+    D.items = D.items.filter(i => !ids.includes(i.id) || i.exhibit || i.opens);
     for (const i of D.items) if (ids.includes(i.id)) { i.off = true; delete i.sits; }
     // what stood on a removed bookcase stays where it is, standing on nothing
     for (const i of D.items) if (i.sits && ids.includes(i.sits)) delete i.sits;
   });
   select(null);
-  status('info', `Sundáno ze stěny: ${ids.length}.` + (stored ? ` ${stored === 1 ? 'Exponát je' : 'Exponáty jsou'} v Exponátech → Mimo stěnu, i s texty.` : ' Obrázky zůstaly v knihovně.') + ' Vrátíš přes ⌘Z.');
+  status('info', `Sundáno ze stěny: ${ids.length}.` + (board ? ' Tabule s aktualitami pověsíš zpět v Aktualitách.' : '') + (stored ? ` ${stored === 1 ? 'Exponát je' : 'Exponáty jsou'} v Exponátech → Mimo stěnu, i s texty.` : ' Obrázky zůstaly v knihovně.') + ' Vrátíš přes ⌘Z.');
 }
 function duplicate() {
   const ids = [...sel].filter(id => id !== NAMEPLATE), created = [];
@@ -615,9 +616,12 @@ function renderInspector() {
         <p class="hint">${m?.light ? `☀ Svítí – plamen ${m.light.x} / ${m.light.y}, dosah ${m.light.radius}. Platí pro všechny kopie tohohle obrázku.` : 'Nesvítí.'}</p>
         <a href="/#knihovna/${d.media}">Nastavit světlo v Knihovně →</a></div>` : ''}`;
   } else {
-    body = `<label class="check"><input type="checkbox" data-k="exhibit"${ex ? ' checked' : ''}> Je to exponát (otevře se, má štítek s číslem)</label>
+    const onWall = d.drawer == null && !d.on;
+    body = `<label class="check"><input type="checkbox" data-k="exhibit"${ex ? ' checked' : ''}${d.opens ? ' disabled' : ''}> Je to exponát (otevře se, má štítek s číslem)</label>
+      <label class="check"><input type="checkbox" data-k="opens"${d.opens ? ' checked' : ''}${ex || !onWall ? ' disabled' : ''}> Otevírá aktuality (tabule)</label>
+      ${d.opens ? '<p class="hint">Klik na tuhle věc otevře tabuli s aktualitami; kopie visí i vedle dveří. Zápisy píšeš v Aktualitách.</p>' : ''}
       ${ex ? `<div class="grid2">${pfx('ex.inv', 'Č.', ex.inv, 'title="Inventární číslo"')}<label class="pfx" style="grid-column:span 1"><span>/e/</span><input data-k="ex.slug" value="${esc(ex.slug)}" title="Adresa exponátu"></label></div>
-        <p class="hint">Texty a galerii píšeš v Exponátech.</p>` : '<p class="hint">Dekorace se na webu neotvírá a nemá štítek.</p>'}`;
+        <p class="hint">Texty a galerii píšeš v Exponátech.</p>` : d.opens ? '' : '<p class="hint">Dekorace se na webu neotvírá a nemá štítek.</p>'}`;
   }
   const summary = ex ? (() => {
     const miss = missing(ex), gal = (ex.gallery || []).filter(g => D().media[g]).length;
@@ -651,6 +655,8 @@ function onInspChange(e) {
       if (k === 'ph.w') { const s = n() / d.placeholder.w; d.placeholder.w = Math.round(d.placeholder.w * s); d.placeholder.h = Math.round(d.placeholder.h * s); }
       else if (['x', 'y', 'w', 'rotation', 'dx', 'dy'].includes(k)) d[k] = n();
       else if (k === 'drawer') { if (v !== '') moveTo(d, Number(v)); }
+      // one board at most: switching it on here switches it off wherever it was
+      else if (k === 'opens') { for (const i of D().items) if (i.opens && i !== d) delete i.opens; if (v) d.opens = 'notices'; else delete d.opens; }
       else if (k === 'exhibit') {
         if (v) d.exhibit = { slug: uniqueSlug(d.id), inv: nextInv(), title: itemName(d), medium: '', description: '', tags: [], gallery: [], plaque: true };
         else delete d.exhibit;

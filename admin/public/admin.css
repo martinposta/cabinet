@@ -358,3 +358,23 @@ body.adm .glow{display:none} body.adm.dark-preview .glow{display:block}
 .pub-ack{display:flex;gap:8px;align-items:center} .pub-actions{gap:8px;margin-top:6px}
 .pub-log{margin:0;padding:10px;background:var(--app);border:1px solid var(--line);border-radius:7px;max-height:220px;overflow:auto;white-space:pre-wrap;font:12px/1.4 var(--mono)}
 .pub details summary{cursor:pointer;color:var(--ink2)}
+
+/* Aktuality (phase 8a): one centred column – the board's state, then the dated entries */
+#sec-aktuality{display:flex}
+.nt-main{flex:1;min-width:0;overflow:auto}
+.nt-col{max-width:760px;margin:0 auto;padding:28px 32px 60px;display:flex;flex-direction:column;gap:16px}
+.nt-col h1{margin:0;font-size:18px;font-weight:600}
+.nt-col .lead{color:var(--ink2);margin:0}
+.nb-state{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px}
+.nb-state>div:first-child{display:flex;flex-direction:column;gap:2px;flex:1 1 300px}
+.nt-entry{display:flex;flex-direction:column;gap:10px}
+.nt-date{max-width:180px;padding:7px 10px}
+.nt-text{resize:none;overflow:hidden;min-height:76px;padding:12px 14px;font-size:15px;line-height:1.6}
+/* Místnost → Úvodní dveře: the notices board beside the doors, dragged on a preview */
+.db-stage{background:#0b100d;border:1px solid var(--line);border-radius:10px;padding:20px 24px;overflow:hidden}
+.db-entry{position:relative;margin-left:8%;user-select:none;touch-action:none}
+.db-doors-ph{position:absolute;inset:0;background:#1d1610;border:1px dashed var(--line3)}
+.db-board{position:absolute;transform:translate(-50%,-50%);cursor:move;outline:1px dashed rgba(224,176,90,.7);outline-offset:3px}
+.db-board img{display:block;height:100%;width:auto;pointer-events:none}
+.db-rz{position:absolute;right:-7px;bottom:-7px;width:12px;height:12px;background:var(--brass);border:1px solid #1a1206;border-radius:2px;cursor:nwse-resize}
+

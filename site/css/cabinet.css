@@ -209,10 +209,11 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 
 /* ---------- real images (PLAN phase 2) ---------- */
 .piece{display:block;max-width:none;transform:rotate(var(--tilt));transition:transform .35s cubic-bezier(.2,.7,.2,1);outline:none}
-.piece.work{cursor:pointer}
-.piece.work:hover,.piece.work:focus-visible{transform:translateY(-5px) rotate(var(--tilt))}
-.piece.work:focus-visible{outline:2px solid var(--ink);outline-offset:10px}
-body.dragging .piece.work{pointer-events:none}
+/* exhibits and the notices board (.opens) lift under the pointer and open on a click */
+.piece.work,.piece.opens{cursor:pointer}
+.piece.work:hover,.piece.work:focus-visible,.piece.opens:hover,.piece.opens:focus-visible{transform:translateY(-5px) rotate(var(--tilt))}
+.piece.work:focus-visible,.piece.opens:focus-visible{outline:2px solid var(--ink);outline-offset:10px}
+body.dragging .piece.work,body.dragging .piece.opens{pointer-events:none}
 .grime{position:absolute;display:block;max-width:none;pointer-events:none;object-fit:cover}
 .cab-photo{position:absolute;left:0;top:0;width:100%;height:auto;display:block;max-width:none;pointer-events:none}
 .front.photo{background:none;box-shadow:none}

@@ -18,6 +18,7 @@ function frame(main) {
   root().innerHTML = `<nav class="subnav" aria-label="Části místnosti">${PARTS.map(([g, list], i) =>
     `<span class="label${i ? ' gap' : ''}">${g}</span>` + list.map(([k, l]) => `<a href="/#mistnost/${k}"${k === part ? ' aria-current="page"' : ''}>${l}</a>`).join('')).join('')}</nav>
     <main class="room-main">${main}</main>`;
+  placeBoard();   // the doors board preview (only present on Úvodní dveře)
 }
 const mediaCard = (role, title, id, empty = 'není vybraný') => {
   const m = id && D().media[id];
@@ -48,7 +49,8 @@ function render() {
       ${mediaCard('doorsFrame', 'Futra kolem dveří', dr.frame, 'žádná')}
       ${dr.frame ? `<div class="row"><span class="hint">${dr.frameOpening ? `Otvor ve futrech: ${Math.round(dr.frameOpening.w * 100)} × ${Math.round(dr.frameOpening.h * 100)} % obrázku – dveře se do něj usadí.` : '<span class="warn">Nakresli otvor, kam patří dveře – do té doby se futra nezobrazí.</span>'}</span>
         <button class="btn" data-act="frame-opening">Nakreslit otvor…</button></div>` : ''}
-      <p class="hint">Fotky dveří i futra nahraješ v Knihovně (druh „Skříň / dveře“ → Dveře). Futra jsou jeden obrázek s průhledným otvorem; dveře se do otvoru roztáhnou a futra se kreslí přes jejich okraje.</p></div>`);
+      <p class="hint">Fotky dveří i futra nahraješ v Knihovně (druh „Skříň / dveře“ → Dveře). Futra jsou jeden obrázek s průhledným otvorem; dveře se do otvoru roztáhnou a futra se kreslí přes jejich okraje.</p>
+      ${doorsBoardBlock()}</div>`);
   }
   if (part === 'jmenovka') return renderPlates();
   if (part === 'oblozeni') {
@@ -93,6 +95,58 @@ function render() {
   if (part === 'statistika') return frame(`<h1>Statistika</h1>
     <p class="lead">Cloudflare Web Analytics: bez cookies, na localhostu se nepočítá. Prázdné = žádná statistika.</p>
     <div class="form">${field('analyticsToken', 'Token', S.analyticsToken, 'placeholder="32 znaků 0–9 a a–f" spellcheck="false"')}</div>`);
+}
+
+// ---------- the notices board beside the doors (phase 8a): dragged and resized on a preview ----------
+// A copy of the wall's board, shown only while that one hangs on the wall. doors.noticesAt = centre x/y and
+// height in fractions of the entry box (the casing, or the doors alone); unset = the default place, the
+// same formula as lib/build.mjs (right of the casing, around handle height, ¼ of its height).
+function doorsEntry() {
+  const dr = D().doors || {}, M = D().media, fr = dr.frame && M[dr.frame], fo = fr && dr.frameOpening, cl = dr.closed && M[dr.closed];
+  return { fr: fo ? fr : null, fo, cl, ar: fo ? fr.w / fr.h : cl ? cl.w / cl.h : 0.75 };
+}
+function boardAt() {
+  const b = D().items.find(i => i.opens === 'notices' && !i.off), bm = b && D().media[b.media];
+  if (!bm) return null;
+  const e = doorsEntry(), at = D().doors?.noticesAt;
+  const h = at?.h ?? 0.25, bw = h * bm.w / bm.h / e.ar;
+  return { b, bm, e, at: at ? { ...at } : { x: 1 + 0.035 + bw / 2, y: 0.56, h } };
+}
+function doorsBoardBlock() {
+  const B = boardAt();
+  if (!B) return `<div class="card stack"><b>Tabule s aktualitami</b><span class="hint">Vedle dveří visí kopie tabule z Aktualit – jen když tabule visí na stěně. Teď žádná na stěně není.</span></div>`;
+  const { e, bm, b } = B, H = 340, W = Math.round(H * e.ar);
+  const doorsImg = e.cl ? `<img src="${mediaSrc(D().doors.closed)}" alt="" style="position:absolute;${e.fo ? `left:${e.fo.x * 100}%;top:${e.fo.y * 100}%;width:${e.fo.w * 100}%;height:${e.fo.h * 100}%;object-fit:cover` : 'inset:0;width:100%;height:100%'}">` : '<div class="db-doors-ph"></div>';
+  return `<div class="card stack"><div class="row" style="justify-content:space-between"><b>Tabule s aktualitami u dveří</b><button class="btn sm" data-act="board-default"${D().doors?.noticesAt ? '' : ' disabled'}>Výchozí místo</button></div>
+    <span class="hint">Táhni tabuli, roh vpravo dole mění velikost. Na úzké obrazovce (telefon), kde se vedle dveří nevejde, se nezobrazí.</span>
+    <div class="db-stage"><div class="db-entry" id="db-entry" style="width:${W}px;height:${H}px">${doorsImg}${e.fr ? `<img src="${mediaSrc(D().doors.frame)}" alt="" style="position:absolute;inset:0;width:100%;height:100%">` : ''}
+      <div class="db-board" id="db-board"><img src="${mediaSrc(b.media, bm.widths[0])}" alt=""><span class="db-rz" data-rz></span></div></div></div></div>`;
+}
+let boardEdit = null;
+function placeBoard() {
+  const el = $('#db-board'), B = boardEdit || boardAt(); if (!el || !B) return;
+  el.style.left = B.at.x * 100 + '%'; el.style.top = B.at.y * 100 + '%'; el.style.height = B.at.h * 100 + '%';
+}
+function onBoardDown(e) {
+  const el = e.target.closest('#db-board'); if (!el) return;
+  e.preventDefault();
+  const entry = $('#db-entry').getBoundingClientRect(), B = boardAt(), a0 = { ...B.at }, sx = e.clientX, sy = e.clientY, rz = !!e.target.closest('[data-rz]');
+  boardEdit = { ...B, at: { ...a0 } };
+  const move = ev => {
+    const dx = (ev.clientX - sx) / entry.width, dy = (ev.clientY - sy) / entry.height;
+    if (rz) boardEdit.at.h = Math.min(0.8, Math.max(0.05, a0.h + dy * 2));   // the centre stays: half the height each way
+    else { boardEdit.at.x = Math.min(2, Math.max(-1, a0.x + dx)); boardEdit.at.y = Math.min(1, Math.max(0, a0.y + dy)); }
+    placeBoard();
+  };
+  const up = async () => {
+    removeEventListener('pointermove', move); removeEventListener('pointerup', up);
+    const at = boardEdit.at; boardEdit = null;
+    if (Math.abs(at.x - a0.x) + Math.abs(at.y - a0.y) + Math.abs(at.h - a0.h) < 0.001) return;
+    const r4 = v => Math.round(v * 10000) / 10000;
+    try { status('saving'); await api('PATCH', '/api/doors', { noticesAt: { x: r4(at.x), y: r4(at.y), h: r4(at.h) } }); await refresh(); status('ok', 'Tabule u dveří přesunuta'); }
+    catch (err) { status('err', err.message); render(); }
+  };
+  addEventListener('pointermove', move); addEventListener('pointerup', up);
 }
 
 // ---------- nameplate and plaques: graphics, type, colours, with a live preview ----------
@@ -300,6 +354,10 @@ async function onClick(e) {
   const act = e.target.closest('[data-act]')?.dataset.act;
   if (act === 'draw') { drawing = !drawing; return renderCabinet(); }
   if (act === 'cut-auto') return saveCabinet({ cutY: '' });
+  if (act === 'board-default') {
+    try { await api('PATCH', '/api/doors', { noticesAt: null }); await refresh(); status('ok', 'Tabule u dveří na výchozím místě'); } catch (err) { status('err', err.message); }
+    return;
+  }
   if (act === 'frame-opening') {
     const dr = D().doors, m = D().media[dr.frame];
     const r = await rectDialog({ title: 'Otvor ve futrech', single: true, src: mediaSrc(dr.frame, m.widths[m.widths.length - 1]), rects: dr.frameOpening ? [dr.frameOpening] : [],
@@ -343,6 +401,7 @@ export function init() {
   // colours repaint the preview while the picker is still open; the save waits for 'change'
   root().addEventListener('input', e => { const t = e.target; if (t.dataset.pl && t.type === 'color') { const [p, k] = t.dataset.pl.split('.'); D().plates[p][k] = t.value; drawPlatePreview(); } });
   root().addEventListener('pointerdown', onCabDown);
+  root().addEventListener('pointerdown', onBoardDown);
   addEventListener('resize', () => { if (!root().hidden && part === 'skrin') drawOverlay(); });
   on('data', () => { if (!root().hidden) render(); });
   stopPointer(root());

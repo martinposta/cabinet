@@ -5,11 +5,12 @@
 import { $, $$, load, bindStatus, status, on, doUndo, doRedo, canUndo, canRedo, unsaved, flush } from './core.js';
 import * as stena from './stena.js';
 import * as exponaty from './exponaty.js';
+import * as aktuality from './aktuality.js';
 import * as knihovna from './knihovna.js';
 import * as mistnost from './mistnost.js';
 import { openPublish } from './publish.js';
 
-const SECTIONS = { stena, exponaty, knihovna, mistnost };
+const SECTIONS = { stena, exponaty, aktuality, knihovna, mistnost };
 let current = null;
 
 function parseHash() {

@@ -68,7 +68,7 @@ test('preview renders the wall template at cabinet/: tokens filled, relative URL
 
 test('data.json is the public projection of cabinet.json', async () => {
   const pub = await (await fetch(BASE + '/preview/data.json')).json();
-  assert.deepEqual(Object.keys(pub).sort(), ['cabinet', 'handCandle', 'items', 'media', 'nameplate', 'plates', 'room', 'settings', 'surround', 'view', 'wall']);
+  assert.deepEqual(Object.keys(pub).sort(), ['cabinet', 'handCandle', 'items', 'media', 'nameplate', 'notices', 'plates', 'room', 'settings', 'surround', 'view', 'wall']);
   assert.deepEqual(Object.keys(pub.settings).sort(), ['fx', 'plateSubtitle', 'plateTitle']);
   assert.deepEqual(pub.settings.fx, { darkness: true, castShadows: true, frameLips: true, roomCandleShadows: true, handCandle: true });
 });
@@ -500,6 +500,46 @@ test('author and other sites: rel=me and schema.org on every page, bad addresses
   assert.deepEqual(person.sameAs, ['https://example.com/', 'https://foto.example.com/']);
   assert.doesNotMatch(await (await fetch(BASE + '/preview/sitemap.xml')).text(), /example\.com/, 'the sitemap lists only this site');
   await call('PATCH', '/api/settings', { authorName: '', authorLinks: '' });
+});
+
+test('notices: timeline newest first, one board at most, a copy beside the doors only while it hangs', async () => {
+  assert.equal((await call('POST', '/api/notices', { date: '2026-13-40', text: 'x' })).status, 400, 'bad date');
+  const a = await call('POST', '/api/notices', { date: '2026-11-01', text: 'Older one' });
+  const b = await call('POST', '/api/notices', { date: '2026-11-20', text: 'Newer one\nSecond paragraph' });
+  const empty = await call('POST', '/api/notices', { date: '2026-11-21', text: '' });
+  assert.equal(b.status, 200, JSON.stringify(b.json));
+  await settle();
+  let pub = await (await fetch(BASE + '/preview/data.json')).json();
+  assert.deepEqual(pub.notices.map(n => n.text.split('\n')[0]), ['Newer one', 'Older one'], 'newest first, the empty one left out');
+  const check = await call('GET', '/api/preflight');
+  assert.ok(check.json.content.some(f => f.area === 'Aktuality' && f.level === 'error'), 'an empty notice is a content error');
+  assert.equal((await call('DELETE', `/api/notices/${empty.json.notice.id}`)).status, 200);
+  assert.equal((await call('PATCH', `/api/notices/${a.json.notice.id}`, { date: '2026-11-25' })).status, 200);
+
+  // the board: an ordinary hung item marked opens:"notices"
+  const img = await call('POST', '/api/media?name=slate.png&kind=item', undefined, await cutout(91));
+  let { data, rev } = await (await fetch(BASE + '/api/state')).json();
+  const board = { id: 'board-t', media: img.json.id, x: 0, y: 0, w: 200, opens: 'notices' };
+  const two = await call('PUT', '/api/layout', { items: [...data.items, board, { ...board, id: 'board-u' }], nameplate: data.nameplate, rev });
+  assert.equal(two.status, 400, 'one board at most');
+  const asExhibit = await call('PUT', '/api/layout', { items: [...data.items, { ...board, exhibit: { slug: 'slate', title: 'Slate', description: 'x' } }], nameplate: data.nameplate, rev });
+  assert.equal(asExhibit.status, 400, 'never an exhibit');
+  const hung = await call('PUT', '/api/layout', { items: [...data.items, board], nameplate: data.nameplate, rev });
+  assert.equal(hung.status, 200, JSON.stringify(hung.json));
+  await settle();
+  let doors = await (await fetch(BASE + '/preview/')).text();
+  assert.match(doors, /id="nbDoors"/, 'a copy beside the doors');
+  assert.match(doors, /"notices":\[\{"id":"[0-9a-f]+","date":"2026-11-25","text":"Older one"\}/, 'notices written into the doors page, newest first');
+  pub = await (await fetch(BASE + '/preview/data.json')).json();
+  assert.equal(pub.items.find(i => i.id === 'board-t')?.opens, 'notices');
+  // taken off the wall: gone from the doors too
+  const off = await call('PUT', '/api/layout', { items: [...data.items, { ...board, off: true }], nameplate: data.nameplate, rev: hung.json.rev });
+  assert.equal(off.status, 200);
+  await settle();
+  doors = await (await fetch(BASE + '/preview/')).text();
+  assert.doesNotMatch(doors, /id="nbDoors"/, 'no copy while the board is off the wall');
+  await call('PUT', '/api/layout', { items: data.items, nameplate: data.nameplate, rev: off.json.rev });
+  for (const n of [a, b]) await call('DELETE', `/api/notices/${n.json.notice.id}`);
 });
 
 test('effect switches and the hand candle', async () => {

@@ -20,6 +20,8 @@ in section 2.
 ---
 
 ## 0. Revision log
+- **8a done – notices board (2026-11-20)** – `data.notices` (`addNotice`/`updateNotice`/`deleteNotice`, `POST/PATCH/DELETE /api/notices`; valid date, text up to 6000 chars, an empty text allowed while writing but a content error in `check-release` and left out of the site), `publicNotices()` newest first (same date: the later written first). The board is an ordinary hung item with `item.opens = "notices"` (validated: one at most, never an exhibit, hangs on the wall); Stěna inspector → Exponát „Otevírá aktuality“ (switching it on elsewhere moves it), taken off the wall like an exhibit (stored `off`, hung back where it was). On the wall it lifts and opens `site/js/notices.js` (veil, walnut frame, slate in CSS, Caveat text / Caveat Brush dates in en-GB, paragraphs per line, chalk squiggle between entries, scrolls inside with a fade, × / Esc / veil close, the camera frozen meanwhile). On the doors page a copy (`#nbDoors`) hangs only while the wall board is on the wall, placed by `doors.noticesAt` {x,y,h} in fractions of the entry box (default right of the casing, around handle height, ¼ of its height; drag/resize in Místnost → Úvodní dveře), opens the same panel there with notices written into the page (no data.json), hidden on a phone or when it does not fit. Admin tab Aktuality: board state card (on the wall: Ukázat / Sundat; off: Pověsit zpět), „+ Nový zápis“ (today, focused), date + auto-growing text, autosave, in-page delete confirmation, re-sorted on a date change. Publish preview counts added/edited/removed notices. Fonts downloaded with Martin's OK (4 woff2, 166 kB, OFL, CREDITS.md). Stand-in board generated (slate, walnut, chalk scribbles) and hung left of the nameplate in Martin's data with `opens` on. Verified: wall board opens („Nothing new yet.“ in Caveat), a copy with two notices shows dates and paragraphs, Esc closes, the doors copy sits right of the casing at ¼ height and opens there, Aktuality creates/saves/takes off/hangs back, the doors board drags and saves. 38 tests.
+- **Brief: notices board, wallpaper around the doors, number-only plaques (planning chat, 2026-11-20)** – new **phase 8** below. Approved mockup: canvas „Kabinet – aktuality“ https://claude.ai/artifact/2c8yxjWZNGmPw51gFwkYmK (if the link does not open from the Code session, ask Martin for screenshots – the text below is complete on its own).
 - **Author and other sites for search engines (2026-11-20, Martin)** – a sitemap may only list the site's own URLs, so martinposta.com and foto.martinposta.com go where search engines read identity: every page now carries `<link rel="me">` to each and schema.org JSON-LD (a `WebSite` whose `author` is a `Person` with `name` and `sameAs`). Settings `authorName` / `authorLinks` (full https addresses, at most 8), in Místnost → Adresa a popis; set to Martin Porter (the name in LICENSE) + both sites. Nothing visible – visible links are a later task. Exhibit slugs were renamed by Martin to readable ones (worldmap, skulloflarsmoller…) before Google indexed them.
 - **No more „missing photos / missing medium“ warnings (2026-11-20, Martin)** – „ne u všech to budu psát“: gallery photos and the medium are optional. Removed from the release audit (`release-check.mjs`; a gallery pointing at a photo that is gone is still an error, a missing description too) and from the admin (`missing()` now only knows a missing description or title, the „Bez fotek“ chip stays as a plain filter, no longer amber). Audit on the real data: 0 errors, 0 warnings.
 - **Release check lets GitHub's own commits through (2026-11-19, Martin)** – publishing stopped on „V historii je osobní e-mail autora: noreply@github.com“: the two commits GitHub made itself while the custom domain was set in the Pages settings („Create CNAME“, „Delete CNAME“) carry `GitHub <noreply@github.com>` as committer. That is GitHub's address, not a personal one; `release-check.mjs` now accepts it next to `…@users.noreply.github.com`. Audit: 0 errors.
@@ -444,6 +446,113 @@ keep them from looking wrong:
 
 ### Phase 7 – optional
 Video in the viewer (D8), ambient sound (candle crackle after first click), admin on Proxmox (Fotogalerie 7b pattern).
+
+### Phase 8 – notices board, wallpaper around the doors, number-only plaques (brief 2026-11-20)
+Three independent tasks, in this order. `npm test` green after each; Martin's
+running admin is never stopped (tests on a copy, own port).
+
+#### 8a – Notices board („Aktuality“)
+A small chalkboard where the visitor reads what is new. **Deliberately simple**
+(Martin rejected categories, links, pictures and a „latest lines“ preview as
+too complicated): the board itself is only a picture, the text is readable
+only after a click.
+
+**On the wall**
+- The board is an **ordinary hung item** (Martin's photo of a small slate in a
+  frame, the chalk „writing“ baked into the texture – nothing readable, no live
+  text on it). It is placed, resized, rotated and layered like anything else.
+- Marked by **`item.opens = "notices"`** (Stěna → inspector → Vzhled or
+  Exponát tab: „Otevírá aktuality“). At most one item may carry it – the
+  server refuses a second one. It is **not an exhibit**: no inventory number,
+  no plaque, no slug, not in Exponáty, not in `list/`.
+- It behaves like an exhibit for the visitor: hover lift, pointer cursor,
+  keyboard focus + Enter, click opens the notices panel. Cast/contact shadows
+  as any item.
+- **„Sundat ze stěny“ exactly as for exhibits** (the same stored-off-wall
+  mechanism): off the wall it keeps its media and settings and can be hung back
+  („Pověsit zpět“ puts it where it was). Where Martin finds it: a status card at
+  the top of the new Aktuality tab – „Tabule je na stěně · Ukázat na stěně ·
+  Sundat ze stěny“ / „Tabule je mimo stěnu · Pověsit zpět“ – and the usual
+  inspector action on Stěna.
+- Stand-in until Martin has a photo: generate one like the surround stand-ins
+  (small dark slate, worn walnut frame, a few wavy chalk scribble lines and a
+  smudge, transparent around, ~600 px tall), import it as ordinary media into
+  his library, hang it near the nameplate and switch `opens` on. He replaces it.
+
+**Beside the doors (entrance page)**
+- A **copy of the same board** (same media) hangs beside the door casing.
+  It is shown **only while the wall board is on the wall**; taking the board off
+  the wall hides it on the doors page too, hanging it back shows it again.
+  No separate on/off switch.
+- Default place: right of the casing, centred around handle height, its height
+  proportional to the casing (≈ ¼ of the casing height). Adjustable in Místnost
+  → Úvodní dveře: drag/resize it on the doors preview, stored as
+  `doors.noticesAt = {x, y, h}` in fractions of the portal box (4 decimals,
+  like `frameOpening`).
+- Click on it opens the same notices panel **on the doors page itself** – no
+  creak, no navigation to the wall. The doors page must stay light (D14): the
+  notices are written into the doors HTML at build time (a small JSON block),
+  no `data.json` fetch. Narrow window where it does not fit next to the casing
+  (phone): hide it.
+
+**The panel (both places, same component)**
+- Opens over a dark veil: the **same board close up**, large (≈ 820 px, fits the
+  window height): walnut frame, slate surface, **chalk handwriting**. Mockup
+  board 3 („Otevřený panel“).
+- Content = a **timeline by date, newest first**: each entry is a date
+  (e.g. „20 November 2026“, `en-GB`, in a brighter chalk) and its text, one
+  paragraph per line break (reuse `paragraphs()`), a faint chalk squiggle between
+  entries. **Nothing else** – no categories, no filters, no links, no images.
+- Scrolls inside the board (faint chalk scrollbar, fade at the bottom); close
+  with × (same big button as the viewer), Esc, click on the veil; focus moves
+  into the panel and back to the board on close.
+- Fonts: **Caveat** (text) and **Caveat Brush** (dates), OFL – self-hosted like
+  the other fonts (latin + latin-ext, only the weights used), licences into
+  `CREDITS.md`. The slate surface may be a library image (role „tabule –
+  povrch“) with a CSS gradient as fallback.
+- No notices yet: the panel shows one line „Nothing new yet.“.
+- Phone list version: no board for now.
+
+**Data**
+- `data.notices = [{ id, date: "YYYY-MM-DD", text }]` (text English, plain,
+  max a few thousand characters); `publicData()` passes them sorted newest
+  first. Validated server-side (valid date, non-empty text, unique id).
+- `diffCabinet` reports notices added / changed / removed in the publish
+  preview; `check-release`: an empty notice text is a content error.
+
+**Admin – new tab „Aktuality“** (top bar: Stěna · Exponáty · **Aktuality** ·
+Knihovna · Místnost). Mockup board 4. One centred column (≈ 760 px):
+- the board status card (above);
+- „+ Nový zápis“ adds an entry with today's date and an empty, focused text;
+- each entry = a card with a **date field** and an **auto-growing textarea**
+  (plain text, a line break = a new paragraph), „Smazat“ with an in-page
+  confirmation; newest first, re-sorted when a date changes (on blur);
+- autosave like everywhere else (status in the top bar), undo not needed.
+
+**Done when:** Martin writes a notice in the admin, it shows on the opened
+board on the wall and next to the doors; taking the board off the wall hides
+both, hanging it back shows both.
+
+#### 8b – Wallpaper around the doors
+The entrance page has black emptiness around the door casing. Fill it with
+**the room's wallpaper** (the same tile media, scaled so it reads the same size
+relative to the doors as on the wall at zoom 1) and the room's **grime overlay**
+when one is set. The doors page does not pan or zoom, so a plain static CSS
+background is fine here (no per-frame cost). The darkness, candlelight and
+vignette stay on top as now. Use a small derivative (the tile only) – the page
+must stay fast (it loads in ~180 ms today).
+- **Done when:** around the doors there is the same green wallpaper as in the
+  room, in candlelight; load time and request count about the same.
+
+#### 8c – Plaques show only the inventory number
+The plaque text „001 Time Transit“ is too long and distracting. Every exhibit
+plaque now reads only **„Inv. no. 001“** (museum convention; three digits as
+now) – on the wall, above things standing on something, on the cabinet, the
+paper tags in the drawers and the phone list. The title stays everywhere else
+(viewer, `list/`, page titles, OG tags, the item's `aria-label` – the plaque
+itself becomes decorative for screen readers). Plaque sizes/positions
+(`plates.plaque`, `plaqueAt`) keep working; plaques simply get shorter.
+- **Done when:** no plaque on the site shows a title, only „Inv. no. NNN“.
 
 ## 6. Open questions
 - (none right now)

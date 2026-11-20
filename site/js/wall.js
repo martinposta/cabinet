@@ -28,7 +28,7 @@ export function runtimeItem(d, i, MEDIA){
   const it={ id:d.id, x:d.x, y:d.y, rotation:d.rotation||0, seed:p.seed??(17+i*53), aw:p.w, ah:p.h,
     art:p.paint==="art"?p.name:undefined, shelf:p.paint==="object"?p.name:undefined,
     shape:f.shape||"rect", mat:f.mat||"gold", fw:f.fw??20, ornate:!!f.ornate,
-    on:d.on, drawer:d.drawer, px:d.dx, py:d.dy, work:!!ex, opening:d.opening, sits:d.sits, pqAt:d.plaqueAt };
+    on:d.on, drawer:d.drawer, px:d.dx, py:d.dy, work:!!ex, opening:d.opening, sits:d.sits, pqAt:d.plaqueAt, opens:d.opens };
   // a real image: w is its world width, the height follows its aspect; aw/ah feed the cabinet code
   if(m){ Object.assign(it,{ mediaId:d.media, m, aw:d.w, ah:d.w*m.h/m.w, art:undefined, shelf:undefined }); }
   if(ex) Object.assign(it,{ slug:ex.slug, title:ex.title, medium:ex.medium||"", desc:ex.description||"",
@@ -187,9 +187,11 @@ export function buildWall(world, data){
     const hang=document.createElement("div"); hang.className="hang"; hang.dataset.id=it.id;
     hang.style.cssText=`left:${it.x-it.ow/2}px;top:${it.y-it.oh/2}px;width:${it.ow}px;--i:${k}${it.z?`;z-index:${it.z}`:""}`;
     if(it.m){
-      const im=mediaImg(it.mediaId,it.m,it.ow,`piece${it.work?" work":""}`);
+      const im=mediaImg(it.mediaId,it.m,it.ow,`piece${it.work?" work":""}${it.opens?" opens":""}`);
       im.style.cssText=`width:${it.ow}px;height:${it.oh}px;--tilt:${it.rotation.toFixed(2)}deg;background:${it.m.alpha?"transparent":it.m.color}`;
       if(it.work){ im.tabIndex=0; im.setAttribute("role","button"); im.alt=`${it.title}, ${it.medium}. Open the gallery`; }
+      // the notices board: opens the notices instead of a gallery (wallpage.js), never an exhibit
+      if(it.opens){ im.tabIndex=0; im.setAttribute("role","button"); im.alt="Notices board. Open the notices"; }
       hang.appendChild(im);
       if(it.work&&it.plaque) hang.appendChild(makePlaque(it,`plaque${it.plaqueAbove?" above":""}`));
       world.appendChild(hang);
@@ -378,5 +380,5 @@ export function buildWall(world, data){
   // between the nameplate's top and the centre piece's plaque
   const top=PLATE.y-PLATE.h/2, bot=centre.y+centre.oh/2+centre.padB;
   const START={ x:data.view?.x??CAB.cx, y:data.view?.y??(top+bot)/2 };
-  return { WALL, BOUNDS, PLATE, CUT_Y, CAB, DRAWERS, centre, START, candleFlames, items:all, exhibits:all.filter(it=>it.work), paintAll };
+  return { WALL, BOUNDS, PLATE, CUT_Y, CAB, DRAWERS, centre, START, candleFlames, items:all, exhibits:all.filter(it=>it.work), board:WALL_ITEMS.find(it=>it.opens&&it.el)||null, paintAll };
 }

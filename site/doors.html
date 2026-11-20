@@ -7,6 +7,7 @@
 <base href="{{ROOT}}">
 {{META}}
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/notices.css?v={{V}}">
 <!-- network only, nothing is decoded here: the wall must not make the doors page feel frozen (D14) -->
 <link rel="prefetch" href="cabinet/">
 <link rel="prefetch" href="data.json">
@@ -27,6 +28,13 @@ body{display:grid;place-items:center;font-family:"IM Fell English SC","Iowan Old
 .portal{position:relative;width:min(92vw,1400px,calc((100vh - 32px) * var(--ar)));aspect-ratio:var(--ar)}
 .portal .doors{position:absolute;left:var(--ox);top:var(--oy);width:var(--ow);height:var(--oh);border-radius:0}
 .portal .doors img,.portal .doors svg{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+/* the box the doors (or the casing) make; the notices board beside them is placed in its fractions */
+.entry{position:relative;line-height:0}
+.nb-doors{position:absolute;transform:translate(-50%,-50%);padding:0;border:0;background:none;cursor:pointer;line-height:0;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.nb-doors img{display:block;height:100%;width:auto;max-width:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6))}
+.nb-doors:hover,.nb-doors:focus-visible{transform:translate(-50%,calc(-50% - 5px))}
+.nb-doors:focus-visible{outline:2px solid var(--gilt-hi);outline-offset:6px}
+@media (max-width:760px){.nb-doors{display:none}}
 .portal .casing{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
 @media (hover:none){.dark{display:none}}
 /* the hand candle, as on the wall (js/cursor.js) */
@@ -37,7 +45,7 @@ html body.candle-cursor,html body.candle-cursor *{cursor:none!important}
 </head>
 <body>
 <main class="scene">
-  {{PORTAL_START}}<button class="doors" id="doors" type="button" aria-label="Enter the cabinet">{{CLOSED}}</button>{{PORTAL_END}}
+  <div class="entry">{{PORTAL_START}}<button class="doors" id="doors" type="button" aria-label="Enter the cabinet">{{CLOSED}}</button>{{PORTAL_END}}{{BOARD}}</div>
 </main>
 <canvas class="dark" aria-hidden="true"></canvas>
 <script>window.DOORS={{DOORS}};</script>
