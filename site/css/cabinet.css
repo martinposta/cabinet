@@ -259,7 +259,10 @@ html.mobile,html.mobile body{height:auto;overflow:auto;overflow-x:hidden}
 body.mobile{touch-action:auto;background:var(--wall)}
 body.mobile #world,body.mobile #wall,body.mobile .shadows,body.mobile .glow,body.mobile .dark,body.mobile .vignette{display:none}
 /* the detail is the whole screen; the list behind it does not scroll along */
-html.mobile body.viewer-open{overflow:hidden}
+/* an open detail locks the page under it – on the phone the document itself (html) is what scrolls, so locking
+   body alone let the list run on once the text reached its end (Martin, 2026-11-20) */
+html.mobile body.viewer-open,html.mobile:has(> body.viewer-open){overflow:hidden}
+html.mobile .viewer{overscroll-behavior:contain}
 /* the wallpaper is this element's background (mobile.js): it scrolls with the exhibits */
 .m-list{position:relative;z-index:1;box-sizing:border-box;min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:56px;padding:40px 0 72px;background-color:var(--wall);background-repeat:repeat}
 .m-plate{position:relative}
