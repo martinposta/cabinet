@@ -2,7 +2,7 @@
 // exhibits (wallpaper, cabinet and its drawers drawn on the photo, doors, nameplate) and the web settings.
 
 import { $, $$, esc, r2, store, on, api, status, refresh, commit, flush, mediaSrc, itemName, pickMedia, stopPointer } from './core.js';
-import { makeNameplate, plateLook } from '/preview/js/wall.js';
+import { makeNameplate, plateLook, plaqueText } from '/preview/js/wall.js';
 import { rectDialog } from './shelves.js';
 
 const root = () => $('#sec-mistnost');
@@ -192,7 +192,7 @@ function drawPlatePreview() {
   np.style.position = 'relative'; np.style.animation = 'none';
   const ex = D().items.find(i => i.exhibit)?.exhibit;
   const pq = document.createElement('div'); pq.className = 'pp-plaque';
-  pq.innerHTML = `<div class="plaque"><b>${String(ex?.inv ?? 1).padStart(3, '0')}</b>${esc(ex?.title || 'Time Transit')}</div>`;
+  pq.innerHTML = `<div class="plaque">${plaqueText(String(ex?.inv ?? 1).padStart(3, '0'))}</div>`;
   world.append(np, pq);
   plateLook(world, PQ, M);
   box.replaceChildren(world);

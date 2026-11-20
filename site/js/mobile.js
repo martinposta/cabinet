@@ -6,7 +6,7 @@
 // A tap opens the same detail as on the wall (routing.js); its × and the system back both close it.
 // Decorations, the cabinet, drawers, shelves and the surround are not shown.
 
-import { runtimeItem, makeNameplate, plateLook } from './wall.js';
+import { runtimeItem, makeNameplate, plateLook, plaqueText } from './wall.js';
 import { mediaImg, mediaUrl } from './media.js';
 import { exhibitRouter } from './routing.js';
 
@@ -61,8 +61,7 @@ export function startMobile(data) {
     if (it.plaque) {
       const p = document.createElement('figcaption');
       p.className = 'plaque';
-      p.innerHTML = '<b></b><span></span>';
-      p.firstChild.textContent = it.inv; p.lastChild.textContent = it.title;
+      p.innerHTML = plaqueText(it.inv); p.setAttribute('aria-hidden', 'true');   // the number only (8c)
       fig.appendChild(p);
     }
     it.fig = fig;

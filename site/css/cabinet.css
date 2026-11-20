@@ -65,7 +65,7 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 .tray .item.work:hover,.tray .item.work:focus-visible{transform:translateY(-4px) rotate(var(--tilt,0deg))}
 .tray .item.work:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 .tray .tag{position:absolute;font-family:var(--f-label);font-size:12px;letter-spacing:.06em;color:#2a2117;background:#e9dcbb;padding:2px 7px 3px;transform:rotate(-4deg);box-shadow:1px 2px 3px rgba(0,0,0,.5);white-space:nowrap;pointer-events:none}
-.tray .tag b{font-weight:400;color:#8a2a1e;margin-right:.4em}
+.tray .tag b{font-weight:400;color:#8a2a1e;margin-left:.3em}
 .front{position:absolute;inset:0;border-radius:2px;cursor:pointer;outline:none;background:repeating-linear-gradient(90deg,rgba(0,0,0,.09) 0 1px,transparent 1px 13px,rgba(255,215,160,.05) 13px 14px,transparent 14px 31px),linear-gradient(180deg,#6d4627,#523319 55%,#5e3c20);box-shadow:inset 0 0 0 2px rgba(0,0,0,.4),0 2px 3px rgba(0,0,0,.4);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
 .front::before{content:"";position:absolute;inset:13px;border-radius:2px;box-shadow:inset 1px 1px 0 rgba(0,0,0,.5),inset -1px -1px 0 rgba(255,220,170,.12),1px 1px 0 rgba(255,220,170,.10),-1px -1px 0 rgba(0,0,0,.45)}
 .front:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
@@ -93,7 +93,7 @@ body.dragging .frame.work,body.dragging .shelf.work,body.dragging .cabinet *{poi
 .orn{position:absolute;inset:-5px;pointer-events:none;--o:calc(var(--fw) * 1.55);background:var(--rosette) top left/var(--o) var(--o) no-repeat,var(--rosette) top right/var(--o) var(--o) no-repeat,var(--rosette) bottom left/var(--o) var(--o) no-repeat,var(--rosette) bottom right/var(--o) var(--o) no-repeat,var(--crest) top center/calc(var(--o) * 2.2) var(--o) no-repeat}
 
 .plaque{position:absolute;left:50%;top:calc(100% + 16px);transform:translateX(-50%);white-space:nowrap;padding:5px 14px 6px;font-family:var(--pq-font,var(--f-label));font-style:var(--pq-style,normal);font-size:var(--pq-size,14px);letter-spacing:.06em;color:var(--pq-color,#2a1d0b);background:linear-gradient(180deg,#e9cf8c,#b8954a 55%,#9c7a35);border-radius:2px;box-shadow:0 2px 4px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,245,210,.6),inset 0 -1px 0 rgba(60,35,5,.5);text-shadow:0 1px 0 rgba(255,240,200,.45);pointer-events:none}
-.plaque b{font-weight:400;color:var(--pq-num,#6b2a14);margin-right:.5em}
+.plaque b{font-weight:400;color:var(--pq-num,#6b2a14);margin-left:.35em}
 /* standing on a shelf or the cabinet top: the plaque goes above the object (wall.js decides) */
 .plaque.above{top:auto;bottom:calc(100% + 12px)}
 .cabinet .plaque.above{bottom:auto;transform:translate(calc(-50% + var(--pq-dx,0px)),calc(-100% - 12px + var(--pq-dy,0px)))}

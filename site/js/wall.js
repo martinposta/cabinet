@@ -14,9 +14,12 @@ const CAB_GEOM={w:1260,topH:34,inset:22,pad:26,gap:16,r1:150,r2:172};
 
 // The brass plaque of an exhibit. `pqAt` ({dx,dy}, world px, dragged in the admin) moves it off its default
 // place as two custom properties the CSS adds to its transform; `data-pq` lets the editor find it.
+// It reads only the inventory number (museum convention, phase 8c): the title is in the viewer, the list
+// page and the item's own label, so the plaque is decorative for screen readers.
+export const plaqueText = inv => `Inv. no.<b>${inv}</b>`;
 function makePlaque(it, cls){
   const p=document.createElement("div"); p.className=cls; p.dataset.pq=it.id;
-  p.innerHTML=`<b>${it.inv}</b>${esc(it.title)}`;
+  p.innerHTML=plaqueText(it.inv); p.setAttribute("aria-hidden","true");
   if(it.pqAt){ p.style.setProperty("--pq-dx",`${it.pqAt.dx}px`); p.style.setProperty("--pq-dy",`${it.pqAt.dy}px`); }
   return p;
 }
@@ -283,7 +286,7 @@ export function buildWall(world, data){
       im.dataset.id=it.id;
       tray.appendChild(im); it.img=im; it.el=im;
       it.wx=CAB.x0+D.x+D.w*it.px; it.wy=CAB.top+D.y+D.h*it.py;
-      if(it.work&&it.plaque){ const t=document.createElement("div"); t.className="tag"; t.style.cssText=`left:${Math.max(12,D.w*it.px-w/2-30)}px;top:${Math.max(12,D.h*it.py-h/2-14)}px`; t.innerHTML=`<b>${it.inv}</b>${esc(it.title)}`; tray.appendChild(t); }
+      if(it.work&&it.plaque){ const t=document.createElement("div"); t.className="tag"; t.style.cssText=`left:${Math.max(12,D.w*it.px-w/2-30)}px;top:${Math.max(12,D.h*it.py-h/2-14)}px`; t.innerHTML=plaqueText(it.inv); t.setAttribute("aria-hidden","true"); tray.appendChild(t); }
     });
     world.appendChild(el);
     // drawers open and close; an open drawer's items become reachable by keyboard
