@@ -347,9 +347,9 @@
         1318
       ],
       "look": "night-oil",
-      "color": "#5e513e",
-      "bytes": 596905,
-      "v": 1,
+      "color": "#5d4636",
+      "bytes": 643323,
+      "v": 2,
       "addedAt": "2026-10-13T17:37:13.617Z"
     },
     "767c78e2f549": {
@@ -363,9 +363,9 @@
         989
       ],
       "look": null,
-      "color": "#8e7056",
-      "bytes": 420835,
-      "v": 1,
+      "color": "#8e624a",
+      "bytes": 475510,
+      "v": 2,
       "addedAt": "2026-10-13T17:37:42.696Z"
     },
     "6626420bc9e3": {
@@ -1158,7 +1158,7 @@
     {
       "id": "candle-2",
       "media": "5e857f37a13c",
-      "x": -621.06,
+      "x": -636.74,
       "y": 793.3,
       "w": 96,
       "rotation": 0
@@ -1506,7 +1506,7 @@
     {
       "id": "antique-leather-books-on-black-backgroun",
       "media": "67ce4e1fdb6d",
-      "x": -650.49,
+      "x": -694.81,
       "y": 1000.03,
       "w": 280.77,
       "rotation": 0,
@@ -1607,8 +1607,8 @@
       "w": 240.71,
       "rotation": 0,
       "plaqueAt": {
-        "dx": -43,
-        "dy": 8.8
+        "dx": 171.4,
+        "dy": 180.1
       },
       "exhibit": {
         "slug": "skulloflarsmoller",
@@ -1627,13 +1627,13 @@
     {
       "id": "dscf2869",
       "media": "f1661f4f6c80",
-      "x": -351.65,
+      "x": -401.55,
       "y": 902.17,
       "w": 238.56,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 15.5,
-        "dy": 8.1
+        "dx": 124.9,
+        "dy": 313.2
       },
       "on": "cabinet",
       "exhibit": {
@@ -1650,13 +1650,13 @@
     {
       "id": "dscf2765",
       "media": "9814ae499102",
-      "x": 222.15,
+      "x": 305.35,
       "y": 969.82,
       "w": 140.35,
       "rotation": 0,
       "plaqueAt": {
-        "dx": 4.4,
-        "dy": 15.7
+        "dx": 121.7,
+        "dy": 179.9
       },
       "on": "cabinet",
       "exhibit": {
@@ -1678,8 +1678,8 @@
       "w": 369.99,
       "rotation": 0,
       "plaqueAt": {
-        "dx": -8.2,
-        "dy": 13.9
+        "dx": 176.6,
+        "dy": 449.7
       },
       "on": "cabinet",
       "exhibit": {
