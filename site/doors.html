@@ -23,6 +23,12 @@ body{display:grid;place-items:center;font-family:"IM Fell English SC","Iowan Old
 .doors img,.doors svg{display:block;max-width:min(92vw,1100px);max-height:calc(100vh - 32px);width:auto;height:auto}
 .doors svg{width:min(92vw,calc((100vh - 32px) * .78));height:auto}
 .dark{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+/* the room's wallpaper around the doors (phase 8b): a static background – this page neither pans nor zooms –
+   and the room's grime over it when there is one; the scene, the darkness and the candle stay on top */
+body{background-repeat:repeat;background-position:center top}
+.grime{position:fixed;inset:0;pointer-events:none;background-position:center;background-size:cover;background-repeat:no-repeat}
+/* no z-index on .scene: the grime is earlier in the page, so it already sits under the doors, and the
+   darkness (later, also positioned) must keep covering them */
 /* the casing around the doors (admin → Místnost → Úvodní dveře): one picture with a see-through opening;
    the doors fill the opening drawn on it and the casing is laid over their edges */
 .portal{position:relative;width:min(92vw,1400px,calc((100vh - 32px) * var(--ar)));aspect-ratio:var(--ar)}
@@ -43,7 +49,7 @@ html body.candle-cursor,html body.candle-cursor *{cursor:none!important}
 .hand-candle[hidden]{display:none}
 </style>
 </head>
-<body>
+<body style="{{BODY_STYLE}}">{{GRIME}}
 <main class="scene">
   <div class="entry">{{PORTAL_START}}<button class="doors" id="doors" type="button" aria-label="Enter the cabinet">{{CLOSED}}</button>{{PORTAL_END}}{{BOARD}}</div>
 </main>
